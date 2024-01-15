@@ -16,9 +16,7 @@ class TaskController extends Controller
     {
 
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(): JsonResponse
     {
         try {
@@ -36,9 +34,6 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
@@ -56,9 +51,6 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Task $task): JsonResponse
     {
         try {
@@ -81,9 +73,6 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTaskRequest $request, Task $task)
     {
         try {
@@ -101,9 +90,6 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Task $task)
     {
         try {
