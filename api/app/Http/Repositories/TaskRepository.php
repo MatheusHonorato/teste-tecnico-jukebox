@@ -16,7 +16,9 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function index(): Paginator
     {
-        return $this->task->orderBy('id', 'desc')->paginate(10);
+        return $this->task->where('user_id', auth()->user()->id)
+                    ->orderBy('id', 'desc')
+                    ->paginate(10);
     }
 
     public function create(array $data): Task
@@ -31,7 +33,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function getById(int $id): Task
     {
         try {
-            return $this->task::with('user')->findOrFail($id);
+            return $this->task::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             throw new \App\Exceptions\TaskExceptionNotFound();
         } catch (\Exception) {
