@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -17,6 +19,16 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    public function render($request, Throwable $exception): Response
+    {
+        $statusCode = $this->isHttpException($exception) ? $exception->getStatusCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
+
+        return response()->json([
+            'error' => class_basename($exception),
+            'message' => $exception->getMessage(),
+        ], $statusCode);
+    }
 
     /**
      * Register the exception handling callbacks for the application.
