@@ -22,11 +22,19 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception): Response
     {
+
         $statusCode = $this->isHttpException($exception) ? $exception->getStatusCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
+
+        $message = $exception->getMessage();
+
+        if(str_contains($message, "No query results for model")) {
+            $message = 'Not found';
+            $statusCode = JsonResponse::HTTP_NOT_FOUND;
+        }
 
         return response()->json([
             'error' => class_basename($exception),
-            'message' => $exception->getMessage(),
+            'message' => $message,
         ], $statusCode);
     }
 
