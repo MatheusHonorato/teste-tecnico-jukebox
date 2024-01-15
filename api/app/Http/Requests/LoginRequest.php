@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\FailedValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+    use FailedValidationTrait;
+
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     public function rules(): array
     {
         return [
@@ -20,20 +24,5 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
 
-    protected function failedValidation(Validator $validator): void
-    {
-        $errors = (new ValidationException($validator))->errors();
-
-        throw new HttpResponseException(
-            response()->json(
-                ['status' => false, 'errors' => $errors],
-                JsonResponse::HTTP_UNPROCESSABLE_ENTITY
-            )
-        );
-    }
 }
