@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Repositories;
 
+use App\Interfaces\TaskRepositoryInterface;
 use App\Models\Task;
 use Illuminate\Contracts\Pagination\Paginator;
 
-class TaskRepository implements TaskRepository
+class TaskRepository implements TaskRepositoryInterface
 {
     public function __construct(private Task $task)
     {
@@ -31,10 +32,10 @@ class TaskRepository implements TaskRepository
     {
         try {
             return $this->task::with('user')->findOrFail($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            throw new \App\Exceptions\TaskExceptionNotFound($e->getMessage());
-        } catch (\Exception $e) {
-            throw new \App\Exceptions\TaskException($e->getMessage());
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
+            throw new \App\Exceptions\TaskExceptionNotFound();
+        } catch (\Exception) {
+            throw new \App\Exceptions\TaskException();
         }
     }
 
