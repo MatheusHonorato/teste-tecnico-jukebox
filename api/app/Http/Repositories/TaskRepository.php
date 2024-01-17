@@ -33,7 +33,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function getById(int $id): Task
     {
         try {
-            return $this->task::findOrFail($id);
+            return $this->task::where('id', $id)->where('user_id', auth()->user()->id)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             throw new \App\Exceptions\TaskExceptionNotFound();
         } catch (\Exception) {

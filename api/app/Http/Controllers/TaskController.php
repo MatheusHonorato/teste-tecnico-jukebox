@@ -23,7 +23,7 @@ class TaskController extends Controller
             $tasks = $this->taskRepository->index();
 
             return response()->json(
-                ['status' => false, 'data' => $tasks],
+                ['status' => true, 'data' => $tasks],
                 JsonResponse::HTTP_OK
             );
         } catch (\App\Exceptions\TaskException $e) {
@@ -37,7 +37,13 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            $task = $this->taskRepository->create($request->validated());
+
+            $data = array_merge(
+                $request->validated(),
+                ['user_id' => auth()->user()->id]
+            );
+
+            $task = $this->taskRepository->create($data);
 
             return response()->json(
                 ['status' => true, 'data' => $task],
