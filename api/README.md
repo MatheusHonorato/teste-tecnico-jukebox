@@ -14,7 +14,7 @@ Após a instalação do docker você pode configurar o seu app no firebase de ac
 - Não é necessario ativar o google analytics para estes testes;
 - Clique em 'Criar projeto';
 - A visão geral do seu projeto será carregada;
-- Aclique no botão '</>' para iniciar uma integração com nosso app web;
+- Clique no botão '</>' para iniciar uma integração com nosso app web;
 - De um apelido a integração e clique em registrar app;
 - Agora serão exibidos os seus dados de autenticação no firebase;
 - Guarde as chaves contidads na constante 'firebaseConfig' (Precisaremos utiliza-las posteriormente);
@@ -24,8 +24,8 @@ Após a instalação do docker você pode configurar o seu app no firebase de ac
 - Clique em 'Generate key pair';
 - Guarde a chave exibida (Precisaremos utiliza-las posteriormente);
 - Agora acesse novamente 'Configurações do projeto' e acesse a aba 'Contas de serviço', clique em gerar nova chave privada e confirme (Guarde o arquivo gerado pois precisaremos mais tarde);
-- Agora habilitaremos a autenticação na nossa integração: Acesse a visão geral do projeto, clique em 'Authentication' na lateral esquerda e confirme;
-- Dentro de 'Authentication' acesse a aba 'Sign-in method' e habilite a autenticação por e-mail e senha.
+- Agora habilitaremos a autenticação na nossa integração: Acesse a visão geral do projeto, clique em 'Criação' , 'Authentication' na lateral esquerda, Clique em 'Vamos começar';
+- Dentro de 'Authentication' acesse a aba 'Sign-in method' e habilite a autenticação por e-mail e senha clicando na opção 'E-mail/senha' em 'Provedores nativos' e 'Ativar' no toggle, agora salve.
 
 Passo a passo para rodar a api
 
