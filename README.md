@@ -15,5 +15,7 @@ Acesse primeiramente o README.md da api e posteriormente do front-end para o pas
 - Docker
 - Docker Compose
 - Laravel Sail
+- PHPCS
+- ESLint
 
 Obs: Todo o desenvolvimento foi feito com o docker e docker compose instalados em ubuntu configurado no wsl 2.
