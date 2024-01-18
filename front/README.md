@@ -33,7 +33,7 @@ npm i
 npm run serve
 ```
 
-- Acesse a aplicação em 'http://localhost:8080/';
+- Acesse a aplicação em http://localhost:8080;
 
 - Ao autenticar na aplicação se não for carregada uma task para o usuário autenticado pressione Ctrl+F5.
 
