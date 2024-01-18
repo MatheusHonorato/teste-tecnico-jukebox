@@ -1,6 +1,6 @@
 # Aplicação desenvolvida para processo seletivo da Jukebox (API)
 
-* Para inicializar o projeto corretamente utilizando Laravel Sail você deve ter docker e docker-compose instalados e já ter configurado um app no firebase.
+* Para inicializar o projeto corretamente utilizando Laravel Sail você deve ter docker e docker-compose instalados e já ter configurado um app no firebase. (Logo a seguir é mostrado como configurar o app).
 
 Passo a passo para instalar o docker em seu sistema operacional
 
