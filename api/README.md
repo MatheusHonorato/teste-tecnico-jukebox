@@ -4,11 +4,11 @@
 
 Passo a passo para instalar o docker em seu sistema operacional
 
-[https://www.docker.com/get-started]([https://www.docker.com/get-started)
+[https://www.docker.com/get-started](https://www.docker.com/get-started)
 
 Após a instalação do docker você pode configurar o seu app no firebase de acordo com os passos a seguir:
 
-- Crie uma conta no firebase (ou lautentique com sua conta google);
+- Crie uma conta no firebase (ou autentique com sua conta google);
 - Após autenticado selecione a opção adicionar projeto;
 - Dê um nome ao seu projeto;
 - Não é necessario ativar o google analytics para estes testes;
@@ -22,7 +22,7 @@ Após a instalação do docker você pode configurar o seu app no firebase de ac
 - No botão ao lado esquerdo de '+ Adicionar app' selecione a sua integração;
 - Acesse a aba 'Cloud Messaging';
 - Clique em 'Generate key pair';
-- Guarde a chave exibida (Precisaremos utiliza-las posteriormente).
+- Guarde a chave exibida (Precisaremos utiliza-las posteriormente);
 - Agora acesse novamente 'Configurações do projeto' e acesse a aba 'Contas de serviço', clique em gerar nova chave privada e confirme (Guarde o arquivo gerado pois precisaremos mais tarde);
 - Agora habilitaremos a autenticação na nossa integração: Acesse a visão geral do projeto, clique em 'Authentication' na lateral esquerda e confirme;
 - Dentro de 'Authentication' acesse a aba 'Sign-in method' e habilite a autenticação por e-mail e senha.
@@ -48,21 +48,21 @@ cd api
 ```bash
 cp .env.example .env
 ```
-- Agora crie um arquivo com o nome 'firebase_credentials.json' na raiz do diretório api e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
+- Agora crie um arquivo com o nome 'firebase_credentials.json' na raiz do diretório 'api' e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
 
-- Instale as dependências com composer no diretório api (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
+- Instale as dependências com composer no diretório 'api' (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
 
 ```bash
 composer install
 ```
 
-- Inicie os containers (garanta que está no diretório api - vc pode verificar o diretório atual rodando o comando 'pwd'). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
+- Inicie os containers (garanta que está no diretório 'api' - vc pode verificar o diretório atual rodando o comando 'pwd' no linux). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-- Roder as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
+- Roder as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
