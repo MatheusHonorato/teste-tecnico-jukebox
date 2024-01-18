@@ -81,7 +81,6 @@ import { getTasks, deleteTask } from '@/services/taskService';
 
 export default {
   name: 'IndexTaskView',
-
   data() {
     return {
       tasks: [],
@@ -91,7 +90,6 @@ export default {
     try {
       this.tasks = await getTasks();
     } catch (error) {
-      console.log(error);
       this.$forceUpdate();
     }
   },
@@ -104,7 +102,7 @@ export default {
       if (response.ok) {
         this.tasks.splice(indexRemove, 1);
       }
-    }
+    },
   }, 
 };
 </script>

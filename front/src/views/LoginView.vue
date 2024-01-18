@@ -64,7 +64,6 @@ export default {
           }
 
         } catch (error) {
-          this.validarEmail = '';
           this.validatePassword = '';
           this.validateLogin = 'Usuário ou senha inválidos';
         }       

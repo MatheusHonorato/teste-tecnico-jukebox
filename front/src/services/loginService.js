@@ -20,10 +20,15 @@ export async function loginFirebase(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+    localStorage.userUid = userCredential.user.uid;
+
     return await loginApi(userCredential.user.accessToken);
   } catch (error) {
     throw new Error('Auth error');
   }
 }
 
-export const logout = async () => localStorage.removeItem('access_token');
+export async function logout ()  {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('userUid');
+} 

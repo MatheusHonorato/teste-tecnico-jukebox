@@ -1,24 +1,43 @@
-# front
+# Aplicação desenvolvida para processo seletivo da Jukebox (Front-End)
 
-## Project setup
-```
-npm install
+* Para inicializar o projeto corretamente você precisa previamente configurar sua conta e app no firrebase (De acordo com o README da api), feito isso podemos prosseguir.
+
+Obs: Verifique se a porta 8080 da sua maquina já está sendo utilizada. Caso esteja atualize a porta.
+
+- Gere o arquivo .env a partir de .env.example
+
+```bash
+cp .env.example .env
 ```
 
-### Compiles and hot-reloads for development
+- Preencha as constantes do .env com os valores da constante 'firebaseConfig' obtida na etapa de configuração do firebase;
+- A última constante do arquivo é preenchida com a chave publica da aplicação obtida na etapa de configuração do projeto na aba 'Cloud Messaging' da sessão 'Configurações do projeto'.
+
+- Acesse o diretório public e gere o arquivo firebase-messaging-sw.js a partir de firebase-messaging-sw.example.js
+
+```bash
+cp firebase-messaging-sw.example.js firebase-messaging-sw.js
 ```
+
+- Edite o arquivo firebase-messaging-sw.js adicionando as chaves de 'firebaseConfig' (O .env não é acessivel aqui por isso as chaves devem ser preenchidas de maneira literal).
+
+- Instale as dependências
+
+```bash
+npm i
+```
+
+- Rode a aplicação
+
+```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- Acesse a aplicação em 'http://localhost:8080/'
 
-### Lints and fixes files
-```
-npm run lint
-```
+Obs: Se ao trocar de usuário for exibido task de outro provavelmente é cache do próprio navegador então pressione Ctrl + F5 para resolver o problema.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Pontos de melhoria
+
+- Refatorar para typescript;
+- Configurar um gerenciador de estado como vuex ou pinia.
