@@ -33,7 +33,7 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox
 
 - MVC
 
-### Pattenrs além dos padrões básicos do framework
+### Patterns além dos padrões básicos do framework
 
 - Respository;
 - Dependency injection;
