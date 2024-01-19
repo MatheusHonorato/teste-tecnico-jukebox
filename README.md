@@ -2,7 +2,7 @@
 
 Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gerenciamento de Tarefas)
 
-[Descrição do problema](descricao.pdf)
+[Descrição do desafio](descricao.pdf)
 
 
 <p align="center">
