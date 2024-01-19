@@ -76,7 +76,7 @@ Após a instalação do docker e docker compose você pode configurar o seu app 
 - Agora habilitaremos a autenticação na nossa integração: Acesse a visão geral do projeto, clique em **Criação**, **Authentication** na lateral esquerda, Clique em **Vamos começar**;
 - Dentro de **Authentication** acesse a aba **Sign-in method** e habilite a autenticação por e-mail e senha clicando na opção **E-mail/senha** em **Provedores nativos** e **Ativar** no toggle, agora salve.
 
-## Agora com docker, docker compose instalados e com app firebase configurado, prossiga com os readmes específicos do backe-end(api) e do front-end.
+#### Agora com docker, docker compose instalados e com app firebase configurado, prossiga com os readmes específicos do backe-end(api) e do front-end.
 
 ## Back-End API [README.md](api/README.md)
 
