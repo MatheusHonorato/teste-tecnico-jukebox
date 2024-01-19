@@ -1,4 +1,4 @@
-# Teste técnico Jukebox
+# 👨🏽‍💻 Teste técnico Jukebox
 
 Teste técnico para vaga de desenvolvedor full stack na Jukebox
 
