@@ -1,6 +1,9 @@
 # 👨🏽‍💻 Teste técnico Jukebox
 
-Teste técnico para vaga de desenvolvedor full stack na Jukebox
+Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gerenciamento de Tarefas)
+
+[Descrição do problema](descricao.pdf)
+
 
 <p align="center">
     <img src="app.png" width="350px"/>
@@ -78,8 +81,8 @@ Após a instalação do docker e docker compose você pode configurar o seu app 
 
 #### Agora com docker, docker compose instalados e com app firebase configurado, prossiga com os readmes específicos do backe-end(api) e do front-end.
 
-## Back-End API [README.md](api/README.md)
+#### Back-End API [README.md](api/README.md)
 
-## Front-End [README.md](front/README.md)
+#### Front-End [README.md](front/README.md)
 
 
