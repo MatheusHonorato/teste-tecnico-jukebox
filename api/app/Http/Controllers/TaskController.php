@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\TaskResource;
+use App\Http\Resources\TaskResourceCollection;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
@@ -23,12 +25,12 @@ class TaskController extends Controller
             $tasks = $this->taskRepository->index();
 
             return response()->json(
-                ['status' => true, 'data' => $tasks],
+                new TaskResourceCollection($tasks),
                 JsonResponse::HTTP_OK
             );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -46,12 +48,12 @@ class TaskController extends Controller
             $task = $this->taskRepository->create($data);
 
             return response()->json(
-                ['status' => true, 'data' => $task],
+                ['data' => new TaskResource($task)],
                 JsonResponse::HTTP_CREATED
             );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -63,51 +65,57 @@ class TaskController extends Controller
             $task = $this->taskRepository->getById($task->id);
 
             return response()->json(
-                ['status' => true, 'data' => $task],
+                ['data' => new TaskResource($task)],
                 JsonResponse::HTTP_OK
             );
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_NOT_FOUND
             );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
 
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         try {
             $this->taskRepository->update($task->id, $request->validated());
 
             return response()->json(
-                ['status' => true, 'data' => $task],
+                [],
                 JsonResponse::HTTP_NO_CONTENT
             );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
 
-    public function destroy(Task $task)
+    public function destroy(Task $task): JsonResponse
     {
         try {
+
             $this->taskRepository->destroy($task->id);
 
             return response()->json(
-                ['status' => true],
+                [],
                 JsonResponse::HTTP_NO_CONTENT
+            );
+        } catch (\App\Exceptions\TaskExceptionNotFound $e) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                JsonResponse::HTTP_NOT_FOUND
             );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
-                ['status' => false, 'message' => $e->getMessage()],
+                ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
