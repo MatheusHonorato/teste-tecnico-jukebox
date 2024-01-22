@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NotificationStoreRequest;
+use App\Http\Requests\TokenUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use Kreait\Firebase\Messaging\CloudMessage;
@@ -19,32 +20,32 @@ class FirebasePushController extends Controller
         $this->notification = Firebase::messaging();
     }
 
-    public function setToken(Request $request): JsonResponse
+    public function setToken(TokenUpdateRequest $request, User $user): JsonResponse
     {
-        $token = $request->input('fcm_token');
+        try {
+            $user->update($request->validated());
 
-        User::find($request->input('uid'))->update([
-            'fcm_token' => $token
-        ]);
-        //Get the currrently logged in user and set their token
-        return response()->json([
-            'message' => 'Successfully Updated FCM Token'
-        ]);
+            return response()->json([], JsonResponse::HTTP_NO_CONTENT);
+        } catch (\App\Exceptions\UserExceptionNotFound $e) {
+            return response()->json(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
-    public function notification(Request $request)
+    public function notification(NotificationStoreRequest $request): JsonResponse
     {
-        $FcmToken = auth()->user()->fcm_token;
-        $title = $request->input('title');
-        $body = $request->input('body');
-        $message = CloudMessage::fromArray([
-          'token' => $FcmToken,
-          'notification' => [
-            'title' => $title,
-             'body' => $body
-            ],
-         ]);
+        try {
+            $message = CloudMessage::fromArray([
+              'token' => auth()->user()->fcm_token,
+              'notification' => $request->validated(),
+            ]);
 
-        $this->notification->send($message);
+            $this->notification->send($message);
+
+            return response()->json([], JsonResponse::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
