@@ -33,13 +33,14 @@ export default {
 
     getToken(messaging, { vapidKey: process.env.VUE_APP_FIREBASE_PUBLIC_KEYS })
       .then((currentToken) => {
-        if (currentToken) {
+        const uid = localStorage.userUid;
+
+        if (currentToken && uid) {
           const formData = new FormData();
           formData.append('fcm_token', currentToken);
-          formData.append('uid', localStorage.userUid);
 
           navigator.sendBeacon(
-            `${process.env.VUE_APP_BASE_URL}/setToken`,
+            `${process.env.VUE_APP_BASE_URL}/tokens/${uid}`,
             formData
           );
         }
