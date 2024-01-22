@@ -5,10 +5,8 @@
     data-bs-theme="dark"
   >
     <div class="container">
-      <a
-        class="navbar-brand"
-        href="#"
-      >Jukebox</a>
+      <router-link class="navbar-brand" :to="{ name: 'tasks.index' }">Jukebox</router-link>
+      
       <button
         class="navbar-toggler"
         type="button"
@@ -27,7 +25,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/"
+              :to="{ name: 'home' }"
             >
               Início
             </router-link>
@@ -35,7 +33,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              to="/tasks"
+              :to="{ name: 'tasks.index' }"
             >
               Tasks
             </router-link>
@@ -44,7 +42,7 @@
             <router-link
               v-if="!authenticated"
               class="nav-link"
-              to="/login"
+              :to="{ name: 'login' }"
             >
               Login
             </router-link>
