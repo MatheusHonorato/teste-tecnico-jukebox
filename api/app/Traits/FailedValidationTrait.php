@@ -17,7 +17,7 @@ trait FailedValidationTrait
 
         throw new HttpResponseException(
             response()->json(
-                ['status' => false, 'errors' => $errors],
+                ['errors' => $errors],
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
             )
         );
