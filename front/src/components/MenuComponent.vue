@@ -5,7 +5,12 @@
     data-bs-theme="dark"
   >
     <div class="container">
-      <router-link class="navbar-brand" :to="{ name: 'tasks.index' }">Jukebox</router-link>
+      <router-link
+        class="navbar-brand"
+        :to="{ name: 'tasks.index' }"
+      >
+        Jukebox
+      </router-link>
       
       <button
         class="navbar-toggler"
@@ -63,7 +68,7 @@
 
 <script>
 import { isAuthenticated } from '@/services/authService';
-import { logout } from '@/services/loginService';
+import { logout as logoutService } from '@/services/loginService';
 
 export default{
   name: 'MenuComponent',
@@ -80,7 +85,7 @@ export default{
 
   methods: {
     logout() {
-      logout();
+      logoutService();
       this.authenticated = false;
       this.$router.push('/login');
     }

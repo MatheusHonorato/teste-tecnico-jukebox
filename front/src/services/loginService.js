@@ -24,8 +24,6 @@ export async function loginFirebase(email, password) {
 
     return await loginApi(userCredential.user.accessToken);
   } catch (error) {
-    console.log('aki');
-    console.log(error);
     throw new Error('Auth error');
   }
 }
