@@ -18,6 +18,8 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 - Laravel 10
 - Firebase: kreait/laravel-firebase 5.6
 - Laravel Sail 8.3
+- Laravel Pint 1.0
+- Xdebug
 - Docker 24.0.7, build afdd53b
 - Docker Compose docker-compose version 1.29.2, build unknown
 

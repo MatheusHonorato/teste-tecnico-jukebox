@@ -8,8 +8,8 @@ use App\Http\Requests\NotificationStoreRequest;
 use App\Http\Requests\TokenUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Kreait\Laravel\Firebase\Facades\Firebase;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class FirebasePushController extends Controller
 {
@@ -36,8 +36,8 @@ class FirebasePushController extends Controller
     {
         try {
             $message = CloudMessage::fromArray([
-              'token' => auth()->user()->fcm_token,
-              'notification' => $request->validated(),
+                'token' => auth()->user()->fcm_token,
+                'notification' => $request->validated(),
             ]);
 
             $this->notification->send($message);

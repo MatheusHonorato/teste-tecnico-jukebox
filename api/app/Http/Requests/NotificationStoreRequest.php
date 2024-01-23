@@ -20,8 +20,7 @@ class NotificationStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'body' => 'required|string'
+            'body' => 'required|string',
         ];
     }
-
 }

@@ -9,7 +9,7 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->na
 Route::post('tokens/{user}', [\App\Http\Controllers\FirebasePushController::class, 'setToken'])->name('firebase.token');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('notification', [\App\Http\Controllers\FirebasePushController::class,'notification'])->name('firebase.notification');
+    Route::post('notification', [\App\Http\Controllers\FirebasePushController::class, 'notification'])->name('firebase.notification');
 
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });

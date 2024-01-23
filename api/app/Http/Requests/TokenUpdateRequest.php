@@ -20,5 +20,4 @@ class TokenUpdateRequest extends FormRequest
     {
         return ['fcm_token' => 'required|string'];
     }
-
 }

@@ -27,7 +27,7 @@ class Handler extends ExceptionHandler
 
         $message = $exception->getMessage();
 
-        if(str_contains($message, "No query results for model")) {
+        if (str_contains($message, 'No query results for model')) {
             $message = 'Not found';
             $statusCode = JsonResponse::HTTP_NOT_FOUND;
         }

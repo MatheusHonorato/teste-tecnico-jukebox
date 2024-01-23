@@ -13,6 +13,7 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 class AuthController
 {
     protected $auth;
+
     public function __construct()
     {
         $this->auth = Firebase::auth();
@@ -33,7 +34,7 @@ class AuthController
             $token = User::find($uid)->createToken('authToken')->plainTextToken;
 
             return response()->json(
-                ['status' => true,'token_type' => 'Bearer','access_token' => $token],
+                ['status' => true, 'token_type' => 'Bearer', 'access_token' => $token],
                 JsonResponse::HTTP_OK
             );
 
@@ -48,5 +49,4 @@ class AuthController
     {
         sleep(2);
     }
-
 }

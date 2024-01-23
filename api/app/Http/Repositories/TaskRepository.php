@@ -17,8 +17,8 @@ class TaskRepository implements TaskRepositoryInterface
     public function index(): Paginator
     {
         return $this->task->where('user_id', auth()->user()->id)
-                    ->orderBy('id', 'desc')
-                    ->paginate(10);
+            ->orderBy('id', 'desc')
+            ->paginate(10);
     }
 
     public function create(array $data): Task
