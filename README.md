@@ -23,7 +23,6 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 
 ### Extensões
 
-- PHP CS:
 - PHP CS Fixer: https://marketplace.visualstudio.com/items?itemName=mansoorkhan96.php-cs-fixer
 - PHP Intelephense: https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
 - PHP Language Features (disable) Obs - Para encontra-la busque em extensões por @builtin php: https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens

@@ -80,7 +80,6 @@ Na raiz do diretório api existe uma collection insomnia v4 em json para testes 
 
 ### Pontos de melhoria
 
-- Aplicar camada resources para formatar retornos da api;
 - Documentar api com swagger;
 - Criar testes unitários e de integração.
 
