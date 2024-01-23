@@ -12,6 +12,7 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 # Stack utilizada
 
 ## Back-End (API)
+
 - PHP 8.3.1
 - MySQL 8
 - Laravel 10
@@ -19,9 +20,19 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 - Laravel Sail 8.3
 - Docker 24.0.7, build afdd53b
 - Docker Compose docker-compose version 1.29.2, build unknown
-- PHPCS
+
+### Extensões
+
+- PHP CS:
+- PHP CS Fixer: https://marketplace.visualstudio.com/items?itemName=mansoorkhan96.php-cs-fixer
+- PHP Intelephense: https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
+- PHP Language Features (disable) Obs - Para encontra-la busque em extensões por @builtin php: https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens
+- PHP Create Class (Atalho para criar arquivos php): https://marketplace.visualstudio.com/items?itemName=jaguadoromero.vscode-php-create-class
+- Xdebug: https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug
+- Codeium: https://marketplace.visualstudio.com/items?itemName=Codeium.codeium
 
 ## Front-End
+
 - Vue.js 3.2.13
 - Vue Router 4.2.5
 - firebase 10.7.1

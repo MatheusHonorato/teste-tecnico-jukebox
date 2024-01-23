@@ -56,6 +56,28 @@ Na raiz do diretório api existe uma collection insomnia v4 em json para testes 
 
 - A rota de envio é a apenas para teste. Em uma solução mais próxima do real você pode a qualquer momento carregar um usuário e enviar a notificação para o dispositivo cadastrado na coluna fcm_token.
 
+### Debug e ferramentas
+
+- Configuração do xebug de acordo com: https://www.youtube.com/watch?v=iHad9TH9mOA
+
+```json
+"configurations": [
+    {
+      "name": "Listen for Xdebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
+      "log": false,
+      "externalConsole": false,
+      "pathMappings": {
+        "/var/www/html": "${workspaceFolder}"
+      },
+      "ignore": [
+        "**/vendor/**/*.php"
+      ]
+    },
+```
+
 ### Pontos de melhoria
 
 - Aplicar camada resources para formatar retornos da api;
