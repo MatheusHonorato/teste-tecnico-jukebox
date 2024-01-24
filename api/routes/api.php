@@ -11,5 +11,5 @@ Route::post('tokens/{user}', [\App\Http\Controllers\FirebasePushController::clas
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('notification', [\App\Http\Controllers\FirebasePushController::class, 'notification'])->name('firebase.notification');
 
-    Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+    Route::apiResource('tasks', \App\Http\Controllers\TaskController::class);
 });
