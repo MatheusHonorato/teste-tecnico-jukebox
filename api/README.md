@@ -34,10 +34,16 @@ composer install
 ./vendor/bin/sail up -d
 ```
 
-- Roder as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
+- Rodar as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
+```
+
+- Rodar as migrations para inicializar a base de testes.
+
+```bash
+./vendor/bin/sail artisan --env=testing  migrate
 ```
 
 - Para listar os nomes das rotas gerados pelo resources acesso o diretório api e rode o comando a seguir:

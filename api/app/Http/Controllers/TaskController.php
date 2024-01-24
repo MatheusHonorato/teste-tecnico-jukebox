@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\DTOs\CreateTaskDTO;
+use App\DTOs\UpdateTaskDTO;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
@@ -16,13 +18,12 @@ class TaskController extends Controller
 {
     public function __construct(private TaskRepositoryInterface $taskRepository)
     {
-
     }
 
     public function index(): JsonResponse
     {
         try {
-            $tasks = $this->taskRepository->index();
+            $tasks = $this->taskRepository->index((string) auth()->user()->id);
 
             return response()->json(
                 new TaskResourceCollection($tasks),
@@ -40,12 +41,9 @@ class TaskController extends Controller
     {
         try {
 
-            $data = array_merge(
-                $request->validated(),
-                ['user_id' => auth()->user()->id]
-            );
+            $data = [...$request->validated(), ...['user_id' => (string) auth()->user()->id]];
 
-            $task = $this->taskRepository->create($data);
+            $task = $this->taskRepository->create(new CreateTaskDTO(...$data));
 
             return response()->json(
                 ['data' => new TaskResource($task)],
@@ -62,7 +60,7 @@ class TaskController extends Controller
     public function show(Task $task): JsonResponse
     {
         try {
-            $task = $this->taskRepository->getById($task->id);
+            $task = $this->taskRepository->getById($task->id, (string) auth()->user()->id);
 
             return response()->json(
                 ['data' => new TaskResource($task)],
@@ -84,7 +82,13 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         try {
-            $this->taskRepository->update($task->id, $request->validated());
+
+            $data = [...$request->validated(), ...['user_id' => (string) auth()->user()->id]];
+
+            $this->taskRepository->update(
+                $task->id,
+                new UpdateTaskDTO(...$data),
+            );
 
             return response()->json(
                 [],
@@ -102,7 +106,7 @@ class TaskController extends Controller
     {
         try {
 
-            $this->taskRepository->destroy($task->id);
+            $this->taskRepository->destroy($task->id, (string) auth()->user()->id);
 
             return response()->json(
                 [],
