@@ -20,6 +20,33 @@ class TaskController extends Controller
     {
     }
 
+    /**
+     * @OA\Get(
+     *      tags={"Tasks"},
+     *      summary="Get list of tasks",
+     *      description="Get list of tasks",
+     *      path="/tasks",
+     *      security={{ "bearerAuth": {}}},
+     *       @OA\Parameter(
+     *           name="page",
+     *           in="query",
+     *           description="Page number",
+     *           @OA\Schema(
+     *               type="integer",
+     *               default="1"
+     *           ),
+     *       ),
+     *       @OA\Response(
+     *           response="200",
+     *           description="List of tasks",
+     *       ),
+     *       @OA\Response(
+     *           response="500",
+     *           description="Internal server error",
+     *       )
+     * )
+     *
+     */
     public function index(): JsonResponse
     {
         try {
@@ -37,6 +64,37 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *      tags={"Tasks"},
+     *      summary="Create new task",
+     *      description="Create new task",
+     *      path="/tasks",
+     *      security={{ "bearerAuth": {}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="title",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="description",
+     *                  type="string"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="201",
+     *          description="Created task",
+     *       ),
+     *      @OA\Response(
+     *          response="500",
+     *          description="Internal server error",
+     *       )
+     * )
+     *
+     */
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
@@ -57,6 +115,36 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      tags={"Tasks"},
+     *      summary="Show task",
+     *      description="Show task",
+     *      path="/tasks/{task}",
+     *      security={{ "bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="task",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="Show task",
+     *       ),
+     *       @OA\Response(
+     *          response="404",
+     *          description="Not found",
+     *       ),
+     *       @OA\Response(
+     *          response="500",
+     *          description="Internal server error",
+     *       )
+     * )
+     *
+     */
     public function show(Task $task): JsonResponse
     {
         try {
@@ -79,6 +167,49 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *      tags={"Tasks"},
+     *      summary="Update task",
+     *      description="Update task",
+     *      path="/tasks/{task}",
+     *      security={{ "bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="task",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="title",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="description",
+     *                  type="string"
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="204",
+     *          description="Updated task",
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          description="Not found",
+     *      ),
+     *      @OA\Response(
+     *          response="500",
+     *          description="Internal server error",
+     *      )
+     * )
+     *
+     */
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         try {
@@ -94,6 +225,11 @@ class TaskController extends Controller
                 [],
                 JsonResponse::HTTP_NO_CONTENT
             );
+        } catch (\App\Exceptions\TaskExceptionNotFound $e) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                JsonResponse::HTTP_NOT_FOUND
+            );
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
@@ -102,6 +238,38 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     *
+     *
+     * @OA\Delete(
+     *      tags={"Tasks"},
+     *      summary="Delete task",
+     *      description="Delete task",
+     *      path="/tasks/{task}",
+     *      security={{ "bearerAuth": {}}},
+     *      @OA\Parameter(
+     *          name="task",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="204",
+     *          description="Destroyed task",
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          description="Not found",
+     *      ),
+     *      @OA\Response(
+     *          response="500",
+     *          description="Internal server error",
+     *      ),
+     * )
+     *
+     */
     public function destroy(Task $task): JsonResponse
     {
         try {

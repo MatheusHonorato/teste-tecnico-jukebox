@@ -11,6 +11,13 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 
 # Stack utilizada
 
+## Modelagem interfaces e banco
+
+- Whimsical: https://www.youtube.com/watch?v=7oFtrv89GTE&list=PLQsSC6fujdEkR4uDaFIqCrlGToDWQE2kg&index=15
+- DrawSQL: https://www.youtube.com/watch?v=bW0u1wtSjsA&list=PLQsSC6fujdEkR4uDaFIqCrlGToDWQE2kg&index=10
+- Notion
+- MySQL Workbench
+
 ## Back-End (API)
 
 - PHP 8.3.1
@@ -19,6 +26,7 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 - Firebase: kreait/laravel-firebase 5.6
 - Laravel Sail 8.3
 - Laravel Pint 1.0
+- Swagger/Open API
 - Xdebug
 - Docker 24.0.7, build afdd53b
 - Docker Compose docker-compose version 1.29.2, build unknown
@@ -96,5 +104,3 @@ Após a instalação do docker e docker compose você pode configurar o seu app 
 #### Back-End API [README.md](api/README.md)
 
 #### Front-End [README.md](front/README.md)
-
-

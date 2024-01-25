@@ -20,21 +20,21 @@ cd api
 ```bash
 cp .env.example .env
 ```
-- Agora crie um arquivo com o nome 'firebase_credentials.json' na raiz do diretório 'api' e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
+- Agora crie um arquivo com o nome **firebase_credentials.json** na raiz do diretório **api** e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
 
-- Instale as dependências com composer no diretório 'api' (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
+- Instale as dependências com composer no diretório **api** (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
 
 ```bash
 composer install
 ```
 
-- Inicie os containers (garanta que está no diretório 'api' - vc pode verificar o diretório atual rodando o comando 'pwd' no linux). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
+- Inicie os containers (garanta que está no diretório **api** - vc pode verificar o diretório atual rodando o comando **pwd** no linux). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-- Rodar as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
+- Rodar as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item **Authentication** no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é **password**)
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
@@ -52,15 +52,21 @@ composer install
 ./vendor/bin/sail artisan route:list --name
 ```
 
-### Obs:
+- Para atualizar a documentação no sweagger.
 
-Na raiz do diretório api existe uma collection insomnia v4 em json para testes (insomnia.json).
+```bash
+./vendor/bin/sail artisan l5-swagger:generate
+```
+
+- Para utilizar a documentação do sweagger acesse: **http://localhost/docs**.
+
+### Obs:
 
 - Para enviar uma notifiação de testes siga o exemplo Notification da coleção insomnia. (Lembre-se que as notificações devem estar habilitadas no navegador -  Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).
 
-- Para enviar uma notificação você precisa de um access_token valido. Inspecione o front-end e pegue o access_token na aba 'Aplicativo', adicione o access token na sua requisição no insomnia na aba 'Bearer'.
+- Para enviar uma notificação você precisa de um access_token valido. Inspecione o front-end e pegue o access_token na aba **Aplicativo**, adicione o access token no swagger.
 
-- A rota de envio é a apenas para teste. Em uma solução mais próxima do real você pode a qualquer momento carregar um usuário e enviar a notificação para o dispositivo cadastrado na coluna fcm_token.
+- A rota de envio é a apenas para teste. Em uma solução mais próxima do real você pode a qualquer momento carregar um usuário e enviar a notificação para o dispositivo cadastrado na coluna **fcm_token**.
 
 ### Debug e ferramentas
 
@@ -83,9 +89,3 @@ Na raiz do diretório api existe uma collection insomnia v4 em json para testes 
       ]
     },
 ```
-
-### Pontos de melhoria
-
-- Documentar api com swagger;
-- Criar testes unitários e de integração.
-

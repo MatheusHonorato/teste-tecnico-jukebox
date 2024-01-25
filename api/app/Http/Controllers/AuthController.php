@@ -19,6 +19,36 @@ class AuthController
         $this->auth = Firebase::auth();
     }
 
+    /**
+     * @OA\Post(
+     *      tags={"Autentication"},
+     *      summary="Login",
+     *      description="Login",
+     *      path="/login",
+     *       @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="token",
+     *                  type="string"
+     *              ),
+     *          )
+     *       ),
+     *       @OA\Response(
+     *           response="204",
+     *           description="Authentication",
+     *       ),
+     *       @OA\Response(
+     *           response="400",
+     *           description="Bad Request",
+     *       ),
+     *       @OA\Response(
+     *           response="401",
+     *           description="Unauthorized",
+     *       )
+     * )
+     *
+     */
     public function login(LoginRequest $request)
     {
         try {
