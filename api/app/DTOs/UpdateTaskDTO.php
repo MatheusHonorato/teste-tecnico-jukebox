@@ -10,5 +10,6 @@ class UpdateTaskDTO
         public readonly string $title,
         public readonly string $description,
         public readonly string $user_id
-    ) {}
+    ) {
+    }
 }

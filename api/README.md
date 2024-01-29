@@ -69,6 +69,18 @@ composer install
 ./vendor/bin/sail artisan queue:work --queue=firebase
 ```
 
+- Para garantir o estilo de código PHP de acordo com as PSR's você pode acessar o container da aplicação e rodar o fixer Laravel Pint:
+
+  - Acessando container
+```bash
+docker exec -ti api_laravel.test_1 bash
+```
+
+  - Rodando Laravel Pint
+```bash
+./vendor/bin/pint
+```
+
 ### Obs:
 
 - Para enviar uma notifiação de testes siga o exemplo Notification da coleção insomnia. (Lembre-se que as notificações devem estar habilitadas no navegador -  Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).

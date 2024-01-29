@@ -25,15 +25,19 @@ class AuthController
      *      summary="Login",
      *      description="Login",
      *      path="/login",
+     *
      *       @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="token",
      *                  type="string"
      *              ),
      *          )
      *       ),
+     *
      *       @OA\Response(
      *           response="204",
      *           description="Authentication",
@@ -47,7 +51,6 @@ class AuthController
      *           description="Unauthorized",
      *       )
      * )
-     *
      */
     public function login(LoginRequest $request): JsonResponse
     {

@@ -31,15 +31,18 @@ class TaskController extends Controller
      *      description="Get list of tasks",
      *      path="/tasks",
      *      security={{ "bearerAuth": {}}},
+     *
      *       @OA\Parameter(
      *           name="page",
      *           in="query",
      *           description="Page number",
+     *
      *           @OA\Schema(
      *               type="integer",
      *               default="1"
      *           ),
      *       ),
+     *
      *       @OA\Response(
      *           response="200",
      *           description="List of tasks",
@@ -49,7 +52,6 @@ class TaskController extends Controller
      *           description="Internal server error",
      *       )
      * )
-     *
      */
     public function index(): JsonResponse
     {
@@ -73,9 +75,12 @@ class TaskController extends Controller
      *      description="Create new task",
      *      path="/tasks",
      *      security={{ "bearerAuth": {}}},
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="title",
      *                  type="string"
@@ -86,6 +91,7 @@ class TaskController extends Controller
      *              ),
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response="201",
      *          description="Created task",
@@ -95,7 +101,6 @@ class TaskController extends Controller
      *          description="Internal server error",
      *       )
      * )
-     *
      */
     public function store(StoreTaskRequest $request): JsonResponse
     {
@@ -120,14 +125,17 @@ class TaskController extends Controller
      *      description="Show task",
      *      path="/tasks/{task}",
      *      security={{ "bearerAuth": {}}},
+     *
      *      @OA\Parameter(
      *          name="task",
      *          in="path",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="integer",
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response="200",
      *          description="Show task",
@@ -141,7 +149,6 @@ class TaskController extends Controller
      *          description="Internal server error",
      *       )
      * )
-     *
      */
     public function show(Task $task): JsonResponse
     {
@@ -169,17 +176,22 @@ class TaskController extends Controller
      *      description="Update task",
      *      path="/tasks/{task}",
      *      security={{ "bearerAuth": {}}},
+     *
      *      @OA\Parameter(
      *          name="task",
      *          in="path",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="integer",
      *          )
      *      ),
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="title",
      *                  type="string"
@@ -190,6 +202,7 @@ class TaskController extends Controller
      *              ),
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response="204",
      *          description="Updated task",
@@ -203,7 +216,6 @@ class TaskController extends Controller
      *          description="Internal server error",
      *      )
      * )
-     *
      */
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
@@ -228,22 +240,23 @@ class TaskController extends Controller
     }
 
     /**
-     *
-     *
      * @OA\Delete(
      *      tags={"Tasks"},
      *      summary="Delete task",
      *      description="Delete task",
      *      path="/tasks/{task}",
      *      security={{ "bearerAuth": {}}},
+     *
      *      @OA\Parameter(
      *          name="task",
      *          in="path",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="integer",
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response="204",
      *          description="Destroyed task",
@@ -257,7 +270,6 @@ class TaskController extends Controller
      *          description="Internal server error",
      *      ),
      * )
-     *
      */
     public function destroy(Task $task): JsonResponse
     {

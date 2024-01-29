@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
     /*
@@ -125,7 +123,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' =>  ''
+            'prefix' => '',
         ],
 
         'default' => [

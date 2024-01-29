@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\TaskEloquentRepository;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Interfaces\TaskServiceInterface;
 use App\Models\Task;
+use App\Repositories\TaskEloquentRepository;
 use App\Services\TaskService;
 use Illuminate\Support\ServiceProvider;
 

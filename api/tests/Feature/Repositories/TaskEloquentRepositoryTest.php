@@ -6,12 +6,12 @@ namespace Tests\Feature\Repositories;
 
 use App\DTOs\CreateTaskDTO;
 use App\DTOs\UpdateTaskDTO;
-use App\Repositories\TaskEloquentRepository;
 use App\Models\Task;
 use App\Models\User;
-use Tests\TestCase;
+use App\Repositories\TaskEloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class TaskEloquentRepositoryTest extends TestCase
 {
@@ -33,9 +33,9 @@ class TaskEloquentRepositoryTest extends TestCase
     {
 
         $user = User::create([
-          'id' => (string) fake()->numberBetween(),
-          'email' => fake()->unique()->safeEmail(),
-          'password' => 'password',
+            'id' => (string) fake()->numberBetween(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => 'password',
         ]);
 
         Auth::login($user);
@@ -95,9 +95,9 @@ class TaskEloquentRepositoryTest extends TestCase
 
         $taskRepository->update($task->id, new UpdateTaskDTO(
             ...[
-            'title' => fake()->sentence(),
-            'description' => fake()->text(),
-            'user_id' => (string) auth()->user()->id
+                'title' => fake()->sentence(),
+                'description' => fake()->text(),
+                'user_id' => (string) auth()->user()->id,
             ]
         ));
     }
@@ -125,5 +125,4 @@ class TaskEloquentRepositoryTest extends TestCase
 
         $taskRepository->destroy($task->id, (string) auth()->user()->id);
     }
-
 }

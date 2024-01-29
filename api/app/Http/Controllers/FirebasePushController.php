@@ -24,23 +24,29 @@ class FirebasePushController extends Controller
      *      description="Set token firebase",
      *      path="/tokens",
      *      security={{ "bearerAuth": {}}},
+     *
      *       @OA\Parameter(
      *           name="user",
      *           in="path",
      *           required=true,
+     *
      *           @OA\Schema(
      *               type="string",
      *           ),
      *       ),
+     *
      *       @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="fcm_token",
      *                  type="string"
      *              ),
      *          )
      *       ),
+     *
      *       @OA\Response(
      *           response="204",
      *           description="Created token",
@@ -50,7 +56,6 @@ class FirebasePushController extends Controller
      *           description="Internal server error",
      *       )
      * )
-     *
      */
     public function setToken(TokenUpdateRequest $request, User $user): JsonResponse
     {
@@ -71,9 +76,12 @@ class FirebasePushController extends Controller
      *      description="Send Notification firebase",
      *      path="/notifications",
      *      security={{ "bearerAuth": {}}},
+     *
      *       @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="title",
      *                  type="string"
@@ -84,6 +92,7 @@ class FirebasePushController extends Controller
      *              ),
      *          )
      *       ),
+     *
      *       @OA\Response(
      *           response="204",
      *           description="Send notification",
@@ -93,7 +102,6 @@ class FirebasePushController extends Controller
      *           description="Internal server error",
      *       )
      * )
-     *
      */
     public function notification(NotificationStoreRequest $request): JsonResponse
     {

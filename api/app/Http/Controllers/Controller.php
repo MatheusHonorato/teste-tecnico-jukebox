@@ -13,10 +13,12 @@ use Illuminate\Routing\Controller as BaseController;
  *      url="http://localhost",
  *      description="Swagger API Documentation"
  * ),
+ *
  * @OA\Info(
  *      version="1.0.0",
  *      title="Swagger API Documentation",
  * )
+ *
  * @OA\SecurityScheme(
  *      type="http",
  *      scheme="bearer",
