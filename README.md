@@ -63,6 +63,10 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 - Service container;
 - Traits.
 
+### Métodos HTTP
+
+- [HTTP Cat](https://http.cat)
+
 ### Versionamento (Git)
 
 - Padrão de commits: **Conventional Commits**

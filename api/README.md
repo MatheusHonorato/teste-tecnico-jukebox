@@ -60,6 +60,15 @@ composer install
 
 - Para utilizar a documentação do sweagger acesse: **http://localhost/docs**.
 
+```bash
+./vendor/bin/sail artisan l5-swagger:generate
+```
+- O disparo de notificações está sendo enviado para uma fila. Para executar os jobs da fila que estamos utilizando rode os comando a seguir:
+
+```bash
+./vendor/bin/sail artisan queue:work --queue=firebase
+```
+
 ### Obs:
 
 - Para enviar uma notifiação de testes siga o exemplo Notification da coleção insomnia. (Lembre-se que as notificações devem estar habilitadas no navegador -  Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).

@@ -6,18 +6,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationStoreRequest;
 use App\Http\Requests\TokenUpdateRequest;
+use App\Jobs\SendNotification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class FirebasePushController extends Controller
 {
-    protected $notification;
-
     public function __construct()
     {
-        $this->notification = Firebase::messaging();
     }
 
     /**
@@ -101,12 +98,11 @@ class FirebasePushController extends Controller
     public function notification(NotificationStoreRequest $request): JsonResponse
     {
         try {
-            $message = CloudMessage::fromArray([
-                'token' => auth()->user()->fcm_token,
-                'notification' => $request->validated(),
-            ]);
-
-            $this->notification->send($message);
+            SendNotification::dispatch(
+                new Firebase(),
+                auth()->user()->fcm_token,
+                $request->validated()
+            )->onQueue('firebase')->delay(now()->addMinutes(1));
 
             return response()->json([], JsonResponse::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
