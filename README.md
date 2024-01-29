@@ -30,6 +30,7 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 - Xdebug
 - Docker 24.0.7, build afdd53b
 - Docker Compose docker-compose version 1.29.2, build unknown
+- Redis: predis/predis 2.2
 
 ### Extensões
 
