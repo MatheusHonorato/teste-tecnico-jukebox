@@ -11,13 +11,17 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskResourceCollection;
 use App\Interfaces\TaskRepositoryInterface;
+use App\Interfaces\TaskServiceInterface;
 use App\Models\Task;
+use App\Utils\TaskUtil;
 use Illuminate\Http\JsonResponse;
 
 class TaskController extends Controller
 {
-    public function __construct(private TaskRepositoryInterface $taskRepository)
-    {
+    public function __construct(
+        private TaskRepositoryInterface $taskRepository,
+        private TaskServiceInterface $taskService
+    ) {
     }
 
     /**
@@ -50,12 +54,10 @@ class TaskController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $tasks = $this->taskRepository->index((string) auth()->user()->id);
 
-            return response()->json(
-                new TaskResourceCollection($tasks),
-                JsonResponse::HTTP_OK
-            );
+            $tasks = $this->taskService->index(auth()->user()->id, request()->page ?? '1');
+
+            return response()->json(new TaskResourceCollection($tasks), JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
@@ -98,15 +100,11 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-
-            $data = [...$request->validated(), ...['user_id' => (string) auth()->user()->id]];
+            $data = TaskUtil::mountTaskUser($request->validated(), auth()->user()->id);
 
             $task = $this->taskRepository->create(new CreateTaskDTO(...$data));
 
-            return response()->json(
-                ['data' => new TaskResource($task)],
-                JsonResponse::HTTP_CREATED
-            );
+            return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_CREATED);
         } catch (\App\Exceptions\TaskException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
@@ -148,12 +146,9 @@ class TaskController extends Controller
     public function show(Task $task): JsonResponse
     {
         try {
-            $task = $this->taskRepository->getById($task->id, (string) auth()->user()->id);
+            $task = $this->taskService->show($task->id, auth()->user()->id);
 
-            return response()->json(
-                ['data' => new TaskResource($task)],
-                JsonResponse::HTTP_OK
-            );
+            return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
@@ -214,17 +209,11 @@ class TaskController extends Controller
     {
         try {
 
-            $data = [...$request->validated(), ...['user_id' => (string) auth()->user()->id]];
+            $data = TaskUtil::mountTaskUser($request->validated(), auth()->user()->id);
 
-            $this->taskRepository->update(
-                $task->id,
-                new UpdateTaskDTO(...$data),
-            );
+            $this->taskRepository->update($task->id, new UpdateTaskDTO(...$data));
 
-            return response()->json(
-                [],
-                JsonResponse::HTTP_NO_CONTENT
-            );
+            return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
@@ -273,13 +262,9 @@ class TaskController extends Controller
     public function destroy(Task $task): JsonResponse
     {
         try {
+            $this->taskRepository->destroy($task->id, auth()->user()->id);
 
-            $this->taskRepository->destroy($task->id, (string) auth()->user()->id);
-
-            return response()->json(
-                [],
-                JsonResponse::HTTP_NO_CONTENT
-            );
+            return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
