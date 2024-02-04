@@ -4,18 +4,29 @@ Teste técnico para vaga de desenvolvedor full stack na Jukebox (Sistema de Gere
 
 [Descrição do desafio](descricao.pdf)
 
-
 <p align="center">
     <img src="app.png" width="350px"/>
 </p>
 
 # Stack utilizada
 
-## Modelagem interfaces e banco
+## Prototipagem de interfaces visuais (Iframes)
+
+<p align="center">
+    <img src="iframe.png" width="350px"/>
+</p>
 
 - Whimsical: https://www.youtube.com/watch?v=7oFtrv89GTE&list=PLQsSC6fujdEkR4uDaFIqCrlGToDWQE2kg&index=15
+
+## Modelagem e gerenciamento de banco de dados
+
+### Diagrama - Entidade Relacionamento
+
+<p align="center">
+    <img src="tables.png" width="350px"/>
+</p>
+
 - DrawSQL: https://www.youtube.com/watch?v=bW0u1wtSjsA&list=PLQsSC6fujdEkR4uDaFIqCrlGToDWQE2kg&index=10
-- Notion
 - MySQL Workbench
 
 ## Back-End (API)

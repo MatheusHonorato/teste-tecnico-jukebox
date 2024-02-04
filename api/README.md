@@ -46,6 +46,12 @@ composer install
 ./vendor/bin/sail artisan --env=testing  migrate
 ```
 
+- Para executar os testes rode o comando a seguir:
+
+```bash
+./vendor/bin/sail artisan test
+```
+
 - Para listar os nomes das rotas gerados pelo resources acesso o diretório api e rode o comando a seguir:
 
 ```bash
@@ -59,31 +65,29 @@ composer install
 ```
 
 - Para utilizar a documentação do sweagger acesse: **http://localhost/docs**.
-
-```bash
-./vendor/bin/sail artisan l5-swagger:generate
-```
-- O disparo de notificações está sendo enviado para uma fila. Para executar os jobs da fila que estamos utilizando rode os comando a seguir:
+ 
+- O disparo de notificações está sendo enviado para uma fila. Para executar os jobs da fila que estamos utilizando rode o comando a seguir:
 
 ```bash
 ./vendor/bin/sail artisan queue:work --queue=firebase
 ```
 
-- Para garantir o estilo de código PHP de acordo com as PSR's você pode acessar o container da aplicação e rodar o fixer Laravel Pint:
+- Se deseja trabalhar com filas utilizando o Horizon e acompanhar pelo dashboard rode o comando a seguir:
 
-  - Acessando container
 ```bash
-docker exec -ti api_laravel.test_1 bash
+./vendor/bin/sail artisan horizon
 ```
+
+- Para garantir o estilo de código PHP de acordo com as PSR's você pode acessar o container da aplicação e rodar o fixer Laravel Pint:
 
   - Rodando Laravel Pint
 ```bash
-./vendor/bin/pint
+./vendor/bin/sail pint
 ```
 
 ### Obs:
 
-- Para enviar uma notifiação de testes siga o exemplo Notification da coleção insomnia. (Lembre-se que as notificações devem estar habilitadas no navegador -  Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).
+- Para enviar uma notifiação de testes siga o exemplo Notification em /docs. (Lembre-se que as notificações devem estar habilitadas no navegador - Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).
 
 - Para enviar uma notificação você precisa de um access_token valido. Inspecione o front-end e pegue o access_token na aba **Aplicativo**, adicione o access token no swagger.
 
@@ -110,3 +114,16 @@ docker exec -ti api_laravel.test_1 bash
       ]
     },
 ```
+
+Observação: Se necessário executar algum comando dentro dos containers por meio de docker exec certifique-se de não executá-lo com o usuário root de dentro do container para evitar problemas de permissão ao acessr arquivos no sistema hospedeiro.
+
+Sugestões de melhoria
+
+- Implementação de testes de unidade
+- Implementação de fluxo Gitflow utilizando branchs como: master, develop, feature, release, hotfix. Ex: https://www.youtube.com/watch?v=xC7frT2JPGE, https://www.youtube.com/watch?v=OYd7F-9qucc
+- Implementação Git Semantic Versioning
+- Implementação PHP Stan
+- Implementação de SSL
+- Implementação script CI/CD
+
+explicação conventional commits: https://www.youtube.com/watch?v=sStBPj7JJpM
