@@ -56,7 +56,6 @@ class TaskController extends Controller
     public function index(): JsonResponse
     {
         try {
-
             $tasks = $this->taskService->index(auth()->user()->id, request()->page ?? '1');
 
             return response()->json(new TaskResourceCollection($tasks), JsonResponse::HTTP_OK);
@@ -105,7 +104,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            $data = TaskUtil::mountTaskUser($request->validated(), auth()->user()->id);
+            $data = TaskUtil::prepareTaskData($request->validated(), auth()->user()->id);
 
             $task = $this->taskRepository->create(new CreateTaskDTO(...$data));
 
@@ -153,6 +152,8 @@ class TaskController extends Controller
     public function show(Task $task): JsonResponse
     {
         try {
+            $this->authorize('view', $task);
+
             $task = $this->taskService->show($task->id, auth()->user()->id);
 
             return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_OK);
@@ -165,6 +166,11 @@ class TaskController extends Controller
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
+        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                JsonResponse::HTTP_FORBIDDEN
             );
         }
     }
@@ -220,8 +226,9 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         try {
+            $this->authorize('update', $task);
 
-            $data = TaskUtil::mountTaskUser($request->validated(), auth()->user()->id);
+            $data = TaskUtil::prepareTaskData($request->validated(), auth()->user()->id);
 
             $this->taskRepository->update($task->id, new UpdateTaskDTO(...$data));
 
@@ -235,6 +242,11 @@ class TaskController extends Controller
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
+        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                JsonResponse::HTTP_FORBIDDEN
             );
         }
     }
@@ -274,7 +286,9 @@ class TaskController extends Controller
     public function destroy(Task $task): JsonResponse
     {
         try {
-            $this->taskRepository->destroy($task->id, auth()->user()->id);
+            $this->authorize('delete', $task);
+
+            $this->taskRepository->destroy($task->id);
 
             return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
@@ -286,6 +300,11 @@ class TaskController extends Controller
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
+        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json(
+                ['message' => $e->getMessage()],
+                JsonResponse::HTTP_FORBIDDEN
             );
         }
     }

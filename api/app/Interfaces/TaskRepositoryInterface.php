@@ -14,9 +14,9 @@ interface TaskRepositoryInterface
 
     public function create(CreateTaskDTO $data): TaskInterface;
 
-    public function getById(int $id, string $userId): TaskInterface;
+    public function getById(int $id): TaskInterface;
 
     public function update(int $id, UpdateTaskDTO $data): void;
 
-    public function destroy(int $id, string $userId): void;
+    public function destroy(int $id): void;
 }

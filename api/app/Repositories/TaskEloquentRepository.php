@@ -33,11 +33,10 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         }
     }
 
-    public function getById(int $id, string $userId): Task
+    public function getById(int $id): Task
     {
         try {
-
-            return $this->task->where('id', $id)->where('user_id', $userId)->firstOrFail();
+            return $this->task->where('id', $id)->firstOrFail();
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             throw new \App\Exceptions\TaskExceptionNotFound();
@@ -48,7 +47,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
 
     public function update($id, UpdateTaskDTO $data): void
     {
-        $entrega = $this->getById($id, $data->user_id);
+        $entrega = $this->getById(id: $id);
 
         try {
             $entrega->updateOrFail((array) $data);
@@ -57,9 +56,9 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         }
     }
 
-    public function destroy(int $id, string $userId): void
+    public function destroy(int $id): void
     {
-        $entrega = $this->getById($id, $userId);
+        $entrega = $this->getById($id);
 
         try {
             $entrega->delete();

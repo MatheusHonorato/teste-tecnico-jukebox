@@ -42,7 +42,7 @@ class TaskService implements TaskServiceInterface
             return unserialize(Redis::get($key));
         }
 
-        $task = $this->taskRepository->getById($id, $user_id);
+        $task = $this->taskRepository->getById($id);
 
         Redis::setex($key, self::TTL, serialize($task));
 

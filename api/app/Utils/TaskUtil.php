@@ -6,7 +6,7 @@ namespace App\Utils;
 
 class TaskUtil
 {
-    public static function mountTaskUser(array $data, string $userId): array
+    public static function prepareTaskData(array $data, string $userId): array
     {
         return [...$data, 'user_id' => $userId];
     }
