@@ -13,16 +13,50 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 class AuthController
 {
     protected $auth;
+
     public function __construct()
     {
         $this->auth = Firebase::auth();
     }
 
-    public function login(LoginRequest $request)
+    /**
+     * @OA\Post(
+     *      tags={"Autentication"},
+     *      summary="Login",
+     *      description="Login",
+     *      path="/login",
+     *
+     *       @OA\RequestBody(
+     *          required=true,
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(
+     *                  property="token",
+     *                  type="string"
+     *              ),
+     *          )
+     *       ),
+     *
+     *       @OA\Response(
+     *           response="204",
+     *           description="Authentication",
+     *       ),
+     *       @OA\Response(
+     *           response="400",
+     *           description="Bad Request",
+     *       ),
+     *       @OA\Response(
+     *           response="401",
+     *           description="Unauthorized",
+     *       )
+     * )
+     */
+    public function login(LoginRequest $request): JsonResponse
     {
         try {
 
-            // Ajuste necessário pois existe uma pequena diferença entre o timezone do servidor e da api gerando problemas ao verificar o token no back-end.
+            // Ajuste necessário, pois existe uma pequena diferença entre o timezone do servidor e da api gerando problemas ao verificar o token no back-end.
             // Tentei alterar configurações de timezone no painel do firebase e na aplicação, mas não obtive sucesso.
             $this->delayTimeZoneDiference();
 
@@ -33,7 +67,7 @@ class AuthController
             $token = User::find($uid)->createToken('authToken')->plainTextToken;
 
             return response()->json(
-                ['status' => true,'token_type' => 'Bearer','access_token' => $token],
+                ['status' => true, 'token_type' => 'Bearer', 'access_token' => $token],
                 JsonResponse::HTTP_OK
             );
 
@@ -48,5 +82,4 @@ class AuthController
     {
         sleep(2);
     }
-
 }

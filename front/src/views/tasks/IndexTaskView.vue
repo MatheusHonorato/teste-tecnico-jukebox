@@ -3,7 +3,7 @@
     <div class="createButton d-flex justify-content-end pe-0">
       <router-link
         class="btn btn-success"
-        to="/tasks/criar"
+        :to="{ name: 'tasks.create' }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,9 +88,18 @@ export default {
   },
   async created() {
     try {
-      this.tasks = await getTasks();
+      const response = await getTasks();
+
+      if (response.ok) {
+        this.tasks = (await response.json()).data;
+      }
+
+      if (response.status == 500) {
+        location.reload();
+      }
+
     } catch (error) {
-      this.$forceUpdate();
+      location.reload();
     }
   },
 
@@ -106,22 +115,3 @@ export default {
   }, 
 };
 </script>
-
- <style scoped>
-  table {
-    width: 100%;
-  }
-
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-  }
-
-  .createButton {
-    display: flex;
-    justify-content: flex-start;
-    padding: 16px;
-    padding-left: 0px;
-  }
- </style>

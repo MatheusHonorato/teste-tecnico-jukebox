@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 trait FailedValidationTrait
 {
@@ -17,7 +17,7 @@ trait FailedValidationTrait
 
         throw new HttpResponseException(
             response()->json(
-                ['status' => false, 'errors' => $errors],
+                ['errors' => $errors],
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
             )
         );

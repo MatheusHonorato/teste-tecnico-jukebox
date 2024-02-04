@@ -17,6 +17,21 @@ export async function getTask(id) {
   }
 }
 
+export async function getTasks() {
+  const apiUrl = BASE_URL_TASKS;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: HEADERS,
+    });
+  
+    return response;
+  } catch (error) {
+    throw new Error('Find error');
+  }
+}
+
 export async function createTask(task) {
   const apiUrl = BASE_URL_TASKS;
   
@@ -45,21 +60,6 @@ export async function updateTask(id, task) {
   });
 
   return response;
-}
-
-export async function getTasks() {
-  const apiUrl = BASE_URL_TASKS;
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: HEADERS,
-    });
-  
-    return (await response.json()).data.data;
-  } catch (error) {
-    throw new Error('Find error');
-  }
 }
 
 export async function deleteTask(task) {

@@ -1,36 +1,8 @@
 # Aplicação desenvolvida para processo seletivo da Jukebox (API)
 
-* Para inicializar o projeto corretamente utilizando Laravel Sail você deve ter docker e docker-compose instalados e já ter configurado um app no firebase. (Logo a seguir é mostrado como configurar o app).
-
-Passo a passo para instalar o docker em seu sistema operacional
-
-[https://www.docker.com/get-started](https://www.docker.com/get-started)
-
-Após a instalação do docker você pode configurar o seu app no firebase de acordo com os passos a seguir:
-
-- Crie uma conta no firebase (ou autentique com sua conta google);
-- Após autenticado selecione a opção adicionar projeto;
-- Dê um nome ao seu projeto;
-- Não é necessario ativar o google analytics para estes testes;
-- Clique em 'Criar projeto';
-- A visão geral do seu projeto será carregada;
-- Clique no botão '</>' para iniciar uma integração com nosso app web;
-- De um apelido a integração e clique em registrar app;
-- Agora serão exibidos os seus dados de autenticação no firebase;
-- Guarde as chaves contidads na constante 'firebaseConfig' (Precisaremos utiliza-las posteriormente);
-- Clique em continuar no console;
-- No botão ao lado esquerdo de '+ Adicionar app' selecione a sua integração;
-- Acesse a aba 'Cloud Messaging';
-- Clique em 'Generate key pair';
-- Guarde a chave exibida (Precisaremos utiliza-las posteriormente);
-- Agora acesse novamente 'Configurações do projeto' e acesse a aba 'Contas de serviço', clique em gerar nova chave privada e confirme (Guarde o arquivo gerado pois precisaremos mais tarde);
-- Agora habilitaremos a autenticação na nossa integração: Acesse a visão geral do projeto, clique em 'Criação' , 'Authentication' na lateral esquerda, Clique em 'Vamos começar';
-- Dentro de 'Authentication' acesse a aba 'Sign-in method' e habilite a autenticação por e-mail e senha clicando na opção 'E-mail/senha' em 'Provedores nativos' e 'Ativar' no toggle, agora salve.
-
-Passo a passo para rodar a api
-
-- Verifique se as portas utilizadas pela aplicação definidas no arquivo docker-compose.yml estão sendo utilizadas por outra aplicação. Se estiverem sendo utilizadas troque para portas disponíveis na sua máquina.
-
+```plaintext
+Verifique se as portas utilizadas pela aplicação definidas no arquivo docker-compose.yml estão sendo utilizadas por outra aplicação. Se estiverem sendo utilizadas troque para portas disponíveis na sua máquina.
+```
 - Clone o repositório
 
 ```bash
@@ -48,24 +20,36 @@ cd api
 ```bash
 cp .env.example .env
 ```
-- Agora crie um arquivo com o nome 'firebase_credentials.json' na raiz do diretório 'api' e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
+- Agora crie um arquivo com o nome **firebase_credentials.json** na raiz do diretório **api** e cole todas as informações do arquivo que baixou do firebase ao gerar chave privada na etapa de configuração do firebase.
 
-- Instale as dependências com composer no diretório 'api' (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
+- Instale as dependências com composer no diretório **api** (Se você não tem o composer configurado pode configura-lo de acordo com a documentação em: [https://getcomposer.org](https://getcomposer.org))
 
 ```bash
 composer install
 ```
 
-- Inicie os containers (garanta que está no diretório 'api' - vc pode verificar o diretório atual rodando o comando 'pwd' no linux). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
+- Inicie os containers (garanta que está no diretório **api** - vc pode verificar o diretório atual rodando o comando **pwd** no linux). Obs: este processo pode ser demorado na primeira vez por que o docker precisa baixar e fazer o build de todas as imagens necessárias.
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-- Roder as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item 'Authentication' no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é 'password')
+- Rodar as migrations e seeders para inicializar a base de dados (Se você voltar na visão geral do seu projeto no item **Authentication** no firebase perceberá que usuários foram criados. Obs: a senha de todos os usuários é **password**)
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
+```
+
+- Rodar as migrations para inicializar a base de testes.
+
+```bash
+./vendor/bin/sail artisan --env=testing  migrate
+```
+
+- Para executar os testes rode o comando a seguir:
+
+```bash
+./vendor/bin/sail artisan test
 ```
 
 - Para listar os nomes das rotas gerados pelo resources acesso o diretório api e rode o comando a seguir:
@@ -74,19 +58,72 @@ composer install
 ./vendor/bin/sail artisan route:list --name
 ```
 
+- Para atualizar a documentação no sweagger.
+
+```bash
+./vendor/bin/sail artisan l5-swagger:generate
+```
+
+- Para utilizar a documentação do sweagger acesse: **http://localhost/docs**.
+ 
+- O disparo de notificações está sendo enviado para uma fila. Para executar os jobs da fila que estamos utilizando rode o comando a seguir:
+
+```bash
+./vendor/bin/sail artisan queue:work --queue=firebase
+```
+
+- Se deseja trabalhar com filas utilizando o Horizon e acompanhar pelo dashboard rode o comando a seguir:
+
+```bash
+./vendor/bin/sail artisan horizon
+```
+
+- Para garantir o estilo de código PHP de acordo com as PSR's você pode acessar o container da aplicação e rodar o fixer Laravel Pint:
+
+  - Rodando Laravel Pint
+```bash
+./vendor/bin/sail pint
+```
+
 ### Obs:
 
-Na raiz do diretório api existe uma collection insomnia v4 em json para testes (insomnia.json).
+- Para enviar uma notifiação de testes siga o exemplo Notification em /docs. (Lembre-se que as notificações devem estar habilitadas no navegador - Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).
 
-- Para enviar uma notifiação de testes siga o exemplo Notification da coleção insomnia. (Lembre-se que as notificações devem estar habilitadas no navegador -  Você pode habilita-las clicando no icone ao lado esquerdo do endereço da pagina).
+- Para enviar uma notificação você precisa de um access_token valido. Inspecione o front-end e pegue o access_token na aba **Aplicativo**, adicione o access token no swagger.
 
-- Para enviar uma notificação você precisa de um access_token valido. Inspecione o front-end e pegue o access_token na aba 'Aplicativo', adicione o access token  na sua requisição no insomnia na aba 'Bearer'.
+- A rota de envio é a apenas para teste. Em uma solução mais próxima do real você pode a qualquer momento carregar um usuário e enviar a notificação para o dispositivo cadastrado na coluna **fcm_token**.
 
-- A rota de envio é a apenas para teste. Em uma solução mais próxima do real você pode a qualquer momento carregar um usuário e enviar a notificação para o dispositivo cadastrado na coluna fcm_token.
+### Debug e ferramentas
 
-### Pontos de melhoria
+- Configuração do xebug de acordo com: https://www.youtube.com/watch?v=iHad9TH9mOA
 
-- Aplicar camada resources para formatar retornos da api;
-- Documentar api com swagger;
-- Criar testes unitários e de integração.
+```json
+"configurations": [
+    {
+      "name": "Listen for Xdebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9000,
+      "log": false,
+      "externalConsole": false,
+      "pathMappings": {
+        "/var/www/html": "${workspaceFolder}"
+      },
+      "ignore": [
+        "**/vendor/**/*.php"
+      ]
+    },
+```
 
+Observação: Se necessário executar algum comando dentro dos containers por meio de docker exec certifique-se de não executá-lo com o usuário root de dentro do container para evitar problemas de permissão ao acessr arquivos no sistema hospedeiro.
+
+Sugestões de melhoria
+
+- Implementação de testes de unidade
+- Implementação de fluxo Gitflow utilizando branchs como: master, develop, feature, release, hotfix. Ex: https://www.youtube.com/watch?v=xC7frT2JPGE, https://www.youtube.com/watch?v=OYd7F-9qucc
+- Implementação Git Semantic Versioning
+- Implementação PHP Stan
+- Implementação de SSL
+- Implementação script CI/CD
+
+explicação conventional commits: https://www.youtube.com/watch?v=sStBPj7JJpM

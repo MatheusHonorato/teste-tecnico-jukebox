@@ -35,10 +35,6 @@ npm run serve
 
 - Acesse a aplicação em http://localhost:8080;
 
-- Ao autenticar na aplicação se não for carregada uma task para o usuário autenticado pressione Ctrl+F5.
-
-Obs: Se ao trocar de usuário for exibido task de outro provavelmente é cache do próprio navegador então pressione Ctrl + F5 para resolver o problema.
-
 ### Pontos de melhoria e ajustes
 
 - Refatorar para typescript;
