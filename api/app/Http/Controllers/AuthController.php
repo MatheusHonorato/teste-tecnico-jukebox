@@ -7,8 +7,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Kreait\Firebase\Exception\Auth\FailedToVerifyToken;
 use Kreait\Firebase\Contract\Auth;
+use Kreait\Firebase\Exception\Auth\FailedToVerifyToken;
 
 class AuthController extends Controller
 {

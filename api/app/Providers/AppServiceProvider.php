@@ -8,8 +8,8 @@ use App\Models\Task;
 use App\Repositories\TaskEloquentRepository;
 use App\Services\TaskService;
 use Illuminate\Support\ServiceProvider;
+use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 use Kreait\Laravel\Firebase\Facades\Firebase;
-use Kreait\Firebase\Contract\Auth  as FirebaseAuth;
 
 class AppServiceProvider extends ServiceProvider
 {
