@@ -15,8 +15,6 @@ class TaskResourceCollection extends ResourceCollection
             'data' => TaskResource::collection($this->collection),
             'meta' => [
                 'pagination' => [
-                    'total' => $this->total(),
-                    'count' => $this->count(),
                     'per_page' => $this->perPage(),
                     'current_page' => $this->currentPage(),
                     'total_pages' => $this->lastPage(),

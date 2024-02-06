@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redis;
 
 class TaskService implements TaskServiceInterface
 {
-    public const TTL = 3600;
+    public const TTL = 60;
 
     public function __construct(private TaskRepositoryInterface $taskRepository)
     {
@@ -27,16 +27,16 @@ class TaskService implements TaskServiceInterface
             return GeneralUtils::generatePaginationFromRedis(Redis::get($key));
         }
 
-        $data = $this->taskRepository->index($user_id);
+        $tasks = $this->taskRepository->index($user_id);
 
-        Redis::setex($key, self::TTL, json_encode($data));
+        Redis::setex($key, self::TTL, json_encode($tasks));
 
-        return $data;
+        return $tasks;
     }
 
-    public function show(int $id, string $user_id): TaskInterface
+    public function show(int $id): TaskInterface
     {
-        $key = "task_{$id}_{$user_id}";
+        $key = "task_{$id}";
 
         if (Redis::exists($key)) {
             return unserialize(Redis::get($key));

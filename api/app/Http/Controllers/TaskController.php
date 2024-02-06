@@ -13,8 +13,8 @@ use App\Http\Resources\TaskResourceCollection;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Interfaces\TaskServiceInterface;
 use App\Models\Task;
-use App\Utils\TaskUtil;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -53,10 +53,10 @@ class TaskController extends Controller
      *       )
      * )
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
-            $tasks = $this->taskService->index(auth()->user()->id, request()->page ?? '1');
+            $tasks = $this->taskService->index($request->user_id, $request->page ?? '1');
 
             return response()->json(new TaskResourceCollection($tasks), JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskException $e) {
@@ -104,9 +104,11 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            $data = TaskUtil::prepareTaskData($request->validated(), auth()->user()->id);
+            $request->validated();
 
-            $task = $this->taskRepository->create(new CreateTaskDTO(...$data));
+            $fields = $request->only(['title', 'description', 'user_id']);
+
+            $task = $this->taskRepository->create(new CreateTaskDTO(...$fields));
 
             return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_CREATED);
         } catch (\App\Exceptions\TaskException $e) {
@@ -154,7 +156,7 @@ class TaskController extends Controller
         try {
             $this->authorize('view', $task);
 
-            $task = $this->taskService->show($task->id, auth()->user()->id);
+            $task = $this->taskService->show($task->id);
 
             return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
@@ -167,7 +169,7 @@ class TaskController extends Controller
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
-        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_FORBIDDEN
@@ -228,9 +230,11 @@ class TaskController extends Controller
         try {
             $this->authorize('update', $task);
 
-            $data = TaskUtil::prepareTaskData($request->validated(), auth()->user()->id);
+            $request->validated();
 
-            $this->taskRepository->update($task->id, new UpdateTaskDTO(...$data));
+            $fields = $request->only(['title', 'description', 'user_id']);
+
+            $this->taskRepository->update($task->id, new UpdateTaskDTO(...$fields));
 
             return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
@@ -243,7 +247,7 @@ class TaskController extends Controller
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
-        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_FORBIDDEN
@@ -301,7 +305,7 @@ class TaskController extends Controller
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
-        } catch(\Illuminate\Auth\Access\AuthorizationException $e) {
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_FORBIDDEN

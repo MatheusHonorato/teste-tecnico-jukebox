@@ -10,5 +10,5 @@ interface TaskServiceInterface
 {
     public function index(string $user_id, string $page): Paginator;
 
-    public function show(int $id, string $user_id): TaskInterface;
+    public function show(int $id): TaskInterface;
 }
