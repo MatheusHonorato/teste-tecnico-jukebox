@@ -104,8 +104,6 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            $request->validated();
-
             $fields = $request->only(['title', 'description', 'user_id']);
 
             $task = $this->taskRepository->create(new CreateTaskDTO(...$fields));
@@ -229,8 +227,6 @@ class TaskController extends Controller
     {
         try {
             $this->authorize('update', $task);
-
-            $request->validated();
 
             $fields = $request->only(['title', 'description', 'user_id']);
 

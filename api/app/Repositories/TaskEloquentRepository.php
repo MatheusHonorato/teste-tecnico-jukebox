@@ -18,8 +18,8 @@ class TaskEloquentRepository implements TaskRepositoryInterface
 
     public function index(string $userId): Paginator
     {
-        return $this->task->where('user_id', $userId)
-            ->orderBy('id', 'desc')
+        return $this->task->whereUserId($userId)
+            ->latest()
             ->paginate(10);
     }
 
@@ -36,7 +36,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
     public function getById(int $id): Task
     {
         try {
-            return $this->task->where('id', $id)->firstOrFail();
+            return $this->task->whereId($id)->firstOrFail();
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             throw new \App\Exceptions\TaskExceptionNotFound();
@@ -47,7 +47,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
 
     public function update($id, UpdateTaskDTO $data): void
     {
-        $entrega = $this->getById(id: $id);
+        $entrega = $this->getById($id);
 
         try {
             $entrega->updateOrFail((array) $data);

@@ -8,15 +8,12 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Kreait\Firebase\Exception\Auth\FailedToVerifyToken;
-use Kreait\Laravel\Firebase\Facades\Firebase;
+use Kreait\Firebase\Contract\Auth;
 
-class AuthController
+class AuthController extends Controller
 {
-    protected $auth;
-
-    public function __construct()
+    public function __construct(private Auth $auth)
     {
-        $this->auth = Firebase::auth();
     }
 
     /**
@@ -55,14 +52,7 @@ class AuthController
     public function login(LoginRequest $request): JsonResponse
     {
         try {
-
-            // Ajuste necessário, pois existe uma pequena diferença entre o timezone do servidor e da api gerando problemas ao verificar o token no back-end.
-            // Tentei alterar configurações de timezone no painel do firebase e na aplicação, mas não obtive sucesso.
-            $this->delayTimeZoneDiference();
-
-            $verifiedIdToken = $this->auth->verifyIdToken($request->token);
-
-            $uid = $verifiedIdToken->claims()->get('sub');
+            $uid = $this->auth->verifyIdToken($request->token)->claims()->get('sub');
 
             $token = User::find($uid)->createToken('authToken')->plainTextToken;
 
@@ -71,12 +61,7 @@ class AuthController
         } catch (FailedToVerifyToken $e) {
             return response()->json(['message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            return response()->json(['message' => $e->getMessage()],JsonResponse::HTTP_FORBIDDEN);
+            return response()->json(['message' => $e->getMessage()], JsonResponse::HTTP_FORBIDDEN);
         }
-    }
-
-    private function delayTimeZoneDiference(): void
-    {
-        sleep(2);
     }
 }
