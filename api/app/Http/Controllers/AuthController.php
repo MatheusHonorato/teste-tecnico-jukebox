@@ -66,16 +66,13 @@ class AuthController
 
             $token = User::find($uid)->createToken('authToken')->plainTextToken;
 
-            return response()->json(
-                ['status' => true, 'token_type' => 'Bearer', 'access_token' => $token],
-                JsonResponse::HTTP_OK
-            );
+            return response()->json(['token_type' => 'Bearer', 'access_token' => $token], JsonResponse::HTTP_OK);
 
         } catch (FailedToVerifyToken $e) {
-            return response()->json(['status' => false, 'error' => 'Bad request', 'message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+            return response()->json(['message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json(['message' => $e->getMessage()],JsonResponse::HTTP_FORBIDDEN);
         }
-
-        return response()->json(['status' => false, 'error' => 'Unauthorized'], JsonResponse::HTTP_UNAUTHORIZED);
     }
 
     private function delayTimeZoneDiference(): void
