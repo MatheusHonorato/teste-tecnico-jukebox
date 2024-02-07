@@ -4,42 +4,34 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Task;
+use App\DTOs\CreateTaskDTO;
 use App\Models\User;
+use App\Repositories\TaskEloquentRepository;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
 {
+    private TaskEloquentRepository $taskRepository;
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->taskRepository = app(TaskEloquentRepository::class);
+    }
+
     public function test_index(): void
     {
-        $user = User::create([
-            'id' => (string) fake()->numberBetween(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password',
-        ]);
-
-        $token = User::find($user->id)->createToken('authToken')->plainTextToken;
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '.$token,
-        ])->get(route('tasks.index'));
+        $response = $this->actingAs($this->user)->get(route('tasks.index'));
 
         $response->assertOk();
     }
 
     public function test_store(): void
     {
-        $user = User::create([
-            'id' => (string) fake()->numberBetween(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password',
-        ]);
-
-        $token = User::find($user->id)->createToken('authToken')->plainTextToken;
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '.$token,
-        ])->post(route('tasks.store'), [
+        $response = $this->actingAs($this->user)->post(route('tasks.store'), [
             'title' => fake()->sentence(),
             'description' => fake()->text(),
         ]);
@@ -49,46 +41,26 @@ class TaskControllerTest extends TestCase
 
     public function test_show(): void
     {
-        $user = User::create([
-            'id' => (string) fake()->numberBetween(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password',
-        ]);
-
-        $task = Task::create([
+        $task = $this->taskRepository->create(new CreateTaskDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
-            'user_id' => $user->id,
-        ]);
+            'user_id' => $this->user->id,
+        ]));
 
-        $token = User::find($user->id)->createToken('authToken')->plainTextToken;
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '.$token,
-        ])->get(route('tasks.show', $task->id));
+        $response = $this->actingAs($this->user)->get(route('tasks.show', $task->id));
 
         $response->assertOk();
     }
 
     public function test_update(): void
     {
-        $user = User::create([
-            'id' => (string) fake()->numberBetween(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password',
-        ]);
-
-        $task = Task::create([
+        $task = $this->taskRepository->create(new CreateTaskDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
-            'user_id' => $user->id,
-        ]);
+            'user_id' => $this->user->id,
+        ]));
 
-        $token = User::find($user->id)->createToken('authToken')->plainTextToken;
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '.$token,
-        ])->put(route('tasks.update', $task->id), [
+        $response = $this->actingAs($this->user)->put(route('tasks.update', $task->id), [
             'title' => fake()->sentence(),
             'description' => fake()->text(),
         ]);
@@ -98,23 +70,13 @@ class TaskControllerTest extends TestCase
 
     public function test_destroy(): void
     {
-        $user = User::create([
-            'id' => (string) fake()->numberBetween(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password',
-        ]);
-
-        $task = Task::create([
+        $task = $this->taskRepository->create(new CreateTaskDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
-            'user_id' => $user->id,
-        ]);
+            'user_id' => $this->user->id,
+        ]));
 
-        $token = User::find($user->id)->createToken('authToken')->plainTextToken;
-
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer '.$token,
-        ])->delete(route('tasks.destroy', $task->id));
+        $response = $this->actingAs($this->user)->delete(route('tasks.destroy', $task->id));
 
         $response->assertNoContent();
     }

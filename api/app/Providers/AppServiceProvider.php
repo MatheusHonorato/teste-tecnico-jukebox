@@ -19,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(TaskRepositoryInterface::class, fn () => new TaskEloquentRepository(new Task()));
+        $this->app->bind(TaskEloquentRepository::class, fn () => new TaskEloquentRepository(new Task()));
         $this->app->bind(TaskServiceInterface::class, fn () => new TaskService(new TaskEloquentRepository(new Task())));
         $this->app->bind(FirebaseAuth::class, fn () => Firebase::auth());
-
     }
 
     /**
