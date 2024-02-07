@@ -12,7 +12,6 @@ use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskResourceCollection;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Interfaces\TaskServiceInterface;
-use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -149,12 +148,12 @@ class TaskController extends Controller
      *       )
      * )
      */
-    public function show(Task $task): JsonResponse
+    public function show(int $id): JsonResponse
     {
         try {
-            $this->authorize('view', $task);
+            $task = $this->taskService->show($id);
 
-            $task = $this->taskService->show($task->id);
+            $this->authorize('view', $task);
 
             return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {
@@ -223,9 +222,11 @@ class TaskController extends Controller
      *      )
      * )
      */
-    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
+    public function update(UpdateTaskRequest $request, int $id): JsonResponse
     {
         try {
+            $task = $this->taskRepository->getById($id);
+
             $this->authorize('update', $task);
 
             $fields = $request->only(['title', 'description', 'user_id']);
@@ -283,9 +284,11 @@ class TaskController extends Controller
      *      ),
      * )
      */
-    public function destroy(Task $task): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         try {
+            $task = $this->taskRepository->getById($id);
+
             $this->authorize('delete', $task);
 
             $this->taskRepository->destroy($task->id);

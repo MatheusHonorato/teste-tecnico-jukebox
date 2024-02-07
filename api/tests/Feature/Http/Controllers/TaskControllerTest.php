@@ -5,21 +5,27 @@ declare(strict_types=1);
 namespace Tests\Feature\Http\Controllers;
 
 use App\DTOs\CreateTaskDTO;
+use App\DTOs\CreateUserDTO;
+use App\Interfaces\TaskRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
-use App\Repositories\TaskEloquentRepository;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
 {
-    private TaskEloquentRepository $taskRepository;
+    private TaskRepositoryInterface $taskRepository;
+
     private User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->taskRepository = app(TaskEloquentRepository::class);
+        $this->user = app(UserRepositoryInterface::class)->create(new CreateUserDTO(
+            ...['id' => (string) fake()->numberBetween(), 'email' => fake()->unique()->safeEmail()]
+        ));
+
+        $this->taskRepository = app(TaskRepositoryInterface::class);
     }
 
     public function test_index(): void

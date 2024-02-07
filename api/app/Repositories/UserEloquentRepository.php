@@ -16,6 +16,32 @@ class UserEloquentRepository implements UserRepositoryInterface
 
     public function create(CreateUserDTO $data): User
     {
-        return $this->user->create((array) $data);
+        try {
+            return $this->user->create((array) $data);
+        } catch (\Exception $e) {
+            throw new \App\Exceptions\UserException($e->getMessage());
+        }
+    }
+
+    public function getById(string $id): User
+    {
+        try {
+            return $this->user->whereId($id)->firstOrFail();
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
+            throw new \App\Exceptions\TaskExceptionNotFound();
+        } catch (\Exception) {
+            throw new \App\Exceptions\TaskException();
+        }
+    }
+
+    public function setToken($id, string $token): void
+    {
+        try {
+            $this->getById($id)->updateOrFail(['fcm_token' => $token]);
+
+        } catch (\Exception $e) {
+            throw new \App\Exceptions\UserException($e->getMessage());
+        }
     }
 }

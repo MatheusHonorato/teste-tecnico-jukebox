@@ -5,28 +5,31 @@ declare(strict_types=1);
 namespace Tests\Feature\Repositories;
 
 use App\DTOs\CreateTaskDTO;
+use App\DTOs\CreateUserDTO;
 use App\DTOs\UpdateTaskDTO;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\TaskEloquentRepository;
+use App\Repositories\UserEloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
 class TaskEloquentRepositoryTest extends TestCase
 {
     private TaskEloquentRepository $taskRepository;
+
     private User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $this->user = App::make(UserEloquentRepository::class)->create(new CreateUserDTO(
+            ...['id' => (string) fake()->numberBetween(), 'email' => fake()->unique()->safeEmail()]
+        ));
 
-        Auth::login($this->user);
-
-        $this->taskRepository = app(TaskEloquentRepository::class);
+        $this->taskRepository = App::make(TaskEloquentRepository::class);
     }
 
     private function createTask(): Task

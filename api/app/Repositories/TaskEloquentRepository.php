@@ -45,7 +45,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         }
     }
 
-    public function update($id, UpdateTaskDTO $data): void
+    public function update(int $id, UpdateTaskDTO $data): void
     {
         $entrega = $this->getById($id);
 

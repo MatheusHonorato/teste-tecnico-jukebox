@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login')->middleware('timezone.difference');
 
-Route::post('tokens/{user}', [\App\Http\Controllers\FirebasePushController::class, 'setToken'])->name('firebase.token');
+Route::post('users/{user}/tokens', [\App\Http\Controllers\UserController::class, 'setToken'])->name('users.token');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('notifications', [\App\Http\Controllers\FirebasePushController::class, 'notification'])->name('firebase.notification');
