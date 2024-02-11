@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TokenUpdateRequest;
-use App\Interfaces\UserRepositoryInterface;
+use App\Contracts\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller

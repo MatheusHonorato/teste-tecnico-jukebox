@@ -223,7 +223,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"CreateTaskDTO.php.html#7\">App\\DTOs\\CreateTaskDTO<\/a>"],[100,1,"<a href=\"UpdateTaskDTO.php.html#7\">App\\DTOs\\UpdateTaskDTO<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[100,1,"<a href=\"CreateTaskInputDTO.php.html#7\">App\\DTOs\\CreateTaskInputDTO<\/a>"],[100,1,"<a href=\"UpdateTaskInputDTO.php.html#7\">App\\DTOs\\UpdateTaskInputDTO<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -247,7 +247,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"CreateTaskDTO.php.html#9\">App\\DTOs\\CreateTaskDTO::__construct<\/a>"],[100,1,"<a href=\"UpdateTaskDTO.php.html#9\">App\\DTOs\\UpdateTaskDTO::__construct<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[100,1,"<a href=\"CreateTaskInputDTO.php.html#9\">App\\DTOs\\CreateTaskInputDTO::__construct<\/a>"],[100,1,"<a href=\"UpdateTaskInputDTO.php.html#9\">App\\DTOs\\UpdateTaskInputDTO::__construct<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);

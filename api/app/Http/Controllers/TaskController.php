@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DTOs\CreateTaskDTO;
-use App\DTOs\UpdateTaskDTO;
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
+use App\DTOs\TaskInputDTO;
+use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskResourceCollection;
-use App\Interfaces\TaskRepositoryInterface;
-use App\Interfaces\TaskServiceInterface;
+use App\Contracts\TaskRepositoryInterface;
+use App\Contracts\TaskServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -55,7 +53,7 @@ class TaskController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $tasks = $this->taskService->index($request->user_id, $request->page ?? '1');
+            $tasks = $this->taskService->index($request->user_id, $request->query('page', '1'));
 
             return response()->json(new TaskResourceCollection($tasks), JsonResponse::HTTP_OK);
         } catch (\App\Exceptions\TaskException $e) {
@@ -100,12 +98,12 @@ class TaskController extends Controller
      *       )
      * )
      */
-    public function store(StoreTaskRequest $request): JsonResponse
+    public function store(TaskRequest $request): JsonResponse
     {
         try {
             $fields = $request->only(['title', 'description', 'user_id']);
 
-            $task = $this->taskRepository->create(new CreateTaskDTO(...$fields));
+            $task = $this->taskRepository->create(new TaskInputDTO(...$fields));
 
             return response()->json(['data' => new TaskResource($task)], JsonResponse::HTTP_CREATED);
         } catch (\App\Exceptions\TaskException $e) {
@@ -222,7 +220,7 @@ class TaskController extends Controller
      *      )
      * )
      */
-    public function update(UpdateTaskRequest $request, int $id): JsonResponse
+    public function update(TaskRequest $request, int $id): JsonResponse
     {
         try {
             $task = $this->taskRepository->getById($id);
@@ -231,7 +229,7 @@ class TaskController extends Controller
 
             $fields = $request->only(['title', 'description', 'user_id']);
 
-            $this->taskRepository->update($task->id, new UpdateTaskDTO(...$fields));
+            $this->taskRepository->update($task->id, new TaskInputDTO(...$fields));
 
             return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (\App\Exceptions\TaskExceptionNotFound $e) {

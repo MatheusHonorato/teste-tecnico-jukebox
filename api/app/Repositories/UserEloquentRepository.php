@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DTOs\CreateUserDTO;
-use App\Interfaces\UserRepositoryInterface;
+use App\DTOs\UserInputDTO;
+use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
 
 class UserEloquentRepository implements UserRepositoryInterface
 {
     public function __construct(private User $user)
     {
+
     }
 
-    public function create(CreateUserDTO $data): User
+    public function create(UserInputDTO $data): User
     {
         try {
             return $this->user->create((array) $data);

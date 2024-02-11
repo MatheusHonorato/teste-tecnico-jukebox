@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Repositories;
 
-use App\DTOs\CreateTaskDTO;
-use App\DTOs\CreateUserDTO;
-use App\DTOs\UpdateTaskDTO;
+use App\DTOs\TaskInputDTO;
+use App\DTOs\UserInputDTO;
+use App\DTOs\UpdateTaskInputDTO;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\TaskEloquentRepository;
@@ -25,7 +25,7 @@ class TaskEloquentRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = App::make(UserEloquentRepository::class)->create(new CreateUserDTO(
+        $this->user = App::make(UserEloquentRepository::class)->create(new UserInputDTO(
             ...['id' => (string) fake()->numberBetween(), 'email' => fake()->unique()->safeEmail()]
         ));
 
@@ -34,7 +34,7 @@ class TaskEloquentRepositoryTest extends TestCase
 
     private function createTask(): Task
     {
-        return $this->taskRepository->create(new CreateTaskDTO(...[
+        return $this->taskRepository->create(new TaskInputDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
             'user_id' => $this->user->id,
@@ -65,7 +65,7 @@ class TaskEloquentRepositoryTest extends TestCase
 
         $this->expectNotToPerformAssertions();
 
-        $this->taskRepository->update($task->id, new UpdateTaskDTO(
+        $this->taskRepository->update($task->id, new TaskInputDTO(
             ...[
                 'title' => fake()->sentence(),
                 'description' => fake()->text(),

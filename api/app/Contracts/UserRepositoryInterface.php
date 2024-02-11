@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Interfaces;
+namespace App\Contracts;
 
-use App\DTOs\CreateUserDTO;
+use App\DTOs\UserInputDTO;
 
 interface UserRepositoryInterface
 {
-    public function create(CreateUserDTO $data): UserInterface;
+    public function create(UserInputDTO $data): UserInterface;
 
     public function getById(string $id): UserInterface;
 

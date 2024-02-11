@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationStoreRequest;
-use App\Jobs\SendNotification;
+use App\Jobs\FirebasePushNotificationJob;
 use Illuminate\Http\JsonResponse;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 
@@ -52,7 +52,7 @@ class FirebasePushController extends Controller
     public function notification(NotificationStoreRequest $request): JsonResponse
     {
         try {
-            SendNotification::dispatch(
+            FirebasePushNotificationJob::dispatch(
                 new Firebase(),
                 auth()->user()->fcm_token,
                 $request->validated()

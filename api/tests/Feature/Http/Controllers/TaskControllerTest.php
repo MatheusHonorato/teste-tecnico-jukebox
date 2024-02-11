@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\DTOs\CreateTaskDTO;
-use App\DTOs\CreateUserDTO;
+use App\DTOs\TaskInputDTO;
+use App\DTOs\UserInputDTO;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
@@ -21,7 +21,7 @@ class TaskControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = app(UserRepositoryInterface::class)->create(new CreateUserDTO(
+        $this->user = app(UserRepositoryInterface::class)->create(new UserInputDTO(
             ...['id' => (string) fake()->numberBetween(), 'email' => fake()->unique()->safeEmail()]
         ));
 
@@ -47,7 +47,7 @@ class TaskControllerTest extends TestCase
 
     public function test_show(): void
     {
-        $task = $this->taskRepository->create(new CreateTaskDTO(...[
+        $task = $this->taskRepository->create(new TaskInputDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
             'user_id' => $this->user->id,
@@ -60,7 +60,7 @@ class TaskControllerTest extends TestCase
 
     public function test_update(): void
     {
-        $task = $this->taskRepository->create(new CreateTaskDTO(...[
+        $task = $this->taskRepository->create(new TaskInputDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
             'user_id' => $this->user->id,
@@ -76,7 +76,7 @@ class TaskControllerTest extends TestCase
 
     public function test_destroy(): void
     {
-        $task = $this->taskRepository->create(new CreateTaskDTO(...[
+        $task = $this->taskRepository->create(new TaskInputDTO(...[
             'title' => fake()->sentence(),
             'description' => fake()->text(),
             'user_id' => $this->user->id,

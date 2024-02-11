@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTOs;
 
-class CreateUserDTO
+class UserInputDTO
 {
     public function __construct(
         public readonly string $id,

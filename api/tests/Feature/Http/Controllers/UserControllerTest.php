@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\DTOs\CreateUserDTO;
+use App\DTOs\UserInputDTO;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Tests\TestCase;
@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
 
     public function test_set_token(): void
     {
-        $this->user = app(UserRepositoryInterface::class)->create(new CreateUserDTO(
+        $this->user = app(UserRepositoryInterface::class)->create(new UserInputDTO(
             ...['id' => (string) fake()->numberBetween(), 'email' => fake()->unique()->safeEmail()]
         ));
 

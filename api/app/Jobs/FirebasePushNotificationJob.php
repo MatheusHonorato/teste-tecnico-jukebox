@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Facade;
 use Kreait\Firebase\Messaging\CloudMessage;
 
-class SendNotification implements ShouldQueue
+class FirebasePushNotificationJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

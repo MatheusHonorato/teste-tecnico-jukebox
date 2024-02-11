@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DTOs\CreateTaskDTO;
-use App\DTOs\UpdateTaskDTO;
-use App\Interfaces\TaskRepositoryInterface;
+use App\DTOs\TaskInputDTO;
+use App\Contracts\TaskRepositoryInterface;
 use App\Models\Task;
 use Illuminate\Contracts\Pagination\Paginator;
 
@@ -23,7 +22,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
             ->paginate(10);
     }
 
-    public function create(CreateTaskDTO $data): Task
+    public function create(TaskInputDTO $data): Task
     {
         try {
             return $this->task->create((array) $data);
@@ -45,7 +44,7 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         }
     }
 
-    public function update(int $id, UpdateTaskDTO $data): void
+    public function update(int $id, TaskInputDTO $data): void
     {
         $entrega = $this->getById($id);
 

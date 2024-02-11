@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Repositories;
 
-use App\DTOs\CreateUserDTO;
+use App\DTOs\UserInputDTO;
 use App\Models\User;
 use App\Repositories\UserEloquentRepository;
 use Illuminate\Support\Facades\App;
@@ -23,7 +23,7 @@ class UserEloquentRepositoryTest extends TestCase
 
     public function test_create(): void
     {
-        $user = $this->userRepository->create(new CreateUserDTO(
+        $user = $this->userRepository->create(new UserInputDTO(
             ...[
                 'id' => (string) fake()->numberBetween(),
                 'email' => fake()->email(),

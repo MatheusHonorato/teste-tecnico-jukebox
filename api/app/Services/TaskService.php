@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Interfaces\TaskInterface;
-use App\Interfaces\TaskRepositoryInterface;
-use App\Interfaces\TaskServiceInterface;
+use App\Contracts\TaskInterface;
+use App\Contracts\TaskRepositoryInterface;
+use App\Contracts\TaskServiceInterface;
 use App\Utils\GeneralUtils;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Facades\Redis;

@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 use App\Traits\FailedValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTaskRequest extends FormRequest
+class TaskRequest extends FormRequest
 {
     use FailedValidationTrait;
 

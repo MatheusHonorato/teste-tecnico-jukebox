@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Interfaces\TaskRepositoryInterface;
-use App\Interfaces\TaskServiceInterface;
-use App\Interfaces\UserRepositoryInterface;
+use App\Contracts\TaskRepositoryInterface;
+use App\Contracts\TaskServiceInterface;
+use App\Contracts\UserRepositoryInterface;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\TaskEloquentRepository;
