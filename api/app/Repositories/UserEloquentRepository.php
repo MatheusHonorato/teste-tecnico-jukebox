@@ -4,36 +4,14 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DTOs\UserInputDTO;
 use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
 
-class UserEloquentRepository implements UserRepositoryInterface
+class UserEloquentRepository extends RepositoryEloquentBase implements UserRepositoryInterface
 {
     public function __construct(private User $user)
     {
-
-    }
-
-    public function create(UserInputDTO $data): User
-    {
-        try {
-            return $this->user->create((array) $data);
-        } catch (\Exception $e) {
-            throw new \App\Exceptions\UserException($e->getMessage());
-        }
-    }
-
-    public function getById(string $id): User
-    {
-        try {
-            return $this->user->whereId($id)->firstOrFail();
-
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
-            throw new \App\Exceptions\TaskExceptionNotFound();
-        } catch (\Exception) {
-            throw new \App\Exceptions\TaskException();
-        }
+        parent::__construct($user);
     }
 
     public function setToken($id, string $token): void

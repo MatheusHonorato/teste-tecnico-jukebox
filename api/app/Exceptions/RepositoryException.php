@@ -6,9 +6,9 @@ namespace App\Exceptions;
 
 use Exception;
 
-class TaskExceptionNotFound extends Exception
+class RepositoryException extends Exception
 {
-    public function __construct(string $message = 'Task not found')
+    public function __construct(string $message = 'Internal error')
     {
         parent::__construct($message);
     }

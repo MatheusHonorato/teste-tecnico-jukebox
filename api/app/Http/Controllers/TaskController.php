@@ -232,12 +232,12 @@ class TaskController extends Controller
             $this->taskRepository->update($task->id, new TaskInputDTO(...$fields));
 
             return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
-        } catch (\App\Exceptions\TaskExceptionNotFound $e) {
+        } catch (\App\Exceptions\RepositoryExceptionNotFound $e) {
             return response()->json(
-                ['message' => $e->getMessage()],
+                ['message' => 'Task not found'],
                 JsonResponse::HTTP_NOT_FOUND
             );
-        } catch (\App\Exceptions\TaskException $e) {
+        } catch (\App\Exceptions\RepositoryException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
@@ -292,12 +292,12 @@ class TaskController extends Controller
             $this->taskRepository->destroy($task->id);
 
             return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
-        } catch (\App\Exceptions\TaskExceptionNotFound $e) {
+        } catch (\App\Exceptions\RepositoryExceptionNotFound $e) {
             return response()->json(
-                ['message' => $e->getMessage()],
+                ['message' => 'Task not found'],
                 JsonResponse::HTTP_NOT_FOUND
             );
-        } catch (\App\Exceptions\TaskException $e) {
+        } catch (\App\Exceptions\RepositoryException $e) {
             return response()->json(
                 ['message' => $e->getMessage()],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR

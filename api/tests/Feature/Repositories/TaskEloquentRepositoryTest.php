@@ -6,7 +6,6 @@ namespace Tests\Feature\Repositories;
 
 use App\DTOs\TaskInputDTO;
 use App\DTOs\UserInputDTO;
-use App\DTOs\UpdateTaskInputDTO;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\TaskEloquentRepository;

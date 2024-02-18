@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Contracts\TaskInterface;
 use App\Contracts\TaskRepositoryInterface;
 use App\Contracts\TaskServiceInterface;
+use App\Models\Task;
 use App\Utils\GeneralUtils;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Facades\Redis;
@@ -34,7 +34,7 @@ class TaskService implements TaskServiceInterface
         return $tasks;
     }
 
-    public function show(int $id): TaskInterface
+    public function show(int $id): Task
     {
         $key = "task_{$id}";
 
@@ -42,9 +42,15 @@ class TaskService implements TaskServiceInterface
             return unserialize(Redis::get($key));
         }
 
-        $task = $this->taskRepository->getById($id);
+        try {
+            $task = $this->taskRepository->getById($id);
 
-        Redis::setex($key, self::TTL, serialize($task));
+            Redis::setex($key, self::TTL, serialize($task));
+        } catch (\App\Exceptions\RepositoryExceptionNotFound) {
+            throw new \App\Exceptions\TaskExceptionNotFound();
+        } catch(\App\Exceptions\RepositoryException) {
+            throw new \App\Exceptions\TaskException();
+        }
 
         return $task;
     }

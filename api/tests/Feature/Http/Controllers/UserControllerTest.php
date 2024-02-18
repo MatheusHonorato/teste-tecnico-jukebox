@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Http\Controllers;
 
 use App\DTOs\UserInputDTO;
-use App\Interfaces\UserRepositoryInterface;
+use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
 use Tests\TestCase;
 

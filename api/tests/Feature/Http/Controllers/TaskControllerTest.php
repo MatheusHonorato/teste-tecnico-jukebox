@@ -6,8 +6,8 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\DTOs\TaskInputDTO;
 use App\DTOs\UserInputDTO;
-use App\Interfaces\TaskRepositoryInterface;
-use App\Interfaces\UserRepositoryInterface;
+use App\Contracts\TaskRepositoryInterface;
+use App\Contracts\UserRepositoryInterface;
 use App\Models\User;
 use Tests\TestCase;
 
